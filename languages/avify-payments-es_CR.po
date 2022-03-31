@@ -1,10 +1,10 @@
-# Avify Payments WordPress Plugin Pot
+# Avify WordPress Plugin Pot
 # This file is distributed under the same license as the Plugins - Avify - Stable (latest release) package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Avify Payments WordPress Plugin Pot v1.0.0\n"
+"Project-Id-Version: Avify WordPress Plugin Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2022-02-11 16:12-0600\n"
+"POT-Creation-Date: 2022-03-31 13:17-0600\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -15,9 +15,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
-"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;"
+"esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;"
+"__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Generator: Poedit 3.0.1\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -29,12 +29,13 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-5: composer.lock\n"
 
 #: avify-payments-gateway.php:9 avify-payments-gateway.php:14
-msgid "Avify Payments"
+msgid "Avify"
 msgstr ""
 
 #: avify-payments-gateway.php:11
-msgid "Accept card payments in WooCommerce through Avify Payments"
-msgstr "Acepta pagos con tarjeta en WooCommerce a través de Avify Payments"
+msgid "Connect your WooCommerce account to Avify and send all your orders to one centralized inventory"
+msgstr ""
+"Conecta tu cuenta de WooCommerce a Avify y envía todos tus pedidos a un inventario centralizado"
 
 #: avify-payments-gateway.php:38
 msgid "Enabled / Disabled"
@@ -81,16 +82,16 @@ msgid "API Mode"
 msgstr "Modo de API"
 
 #: avify-payments-gateway.php:70
-msgid "Avify Payments API Mode"
-msgstr "Modo de Avify Payments API"
+msgid "Avify API Mode"
+msgstr "Modo de Avify API"
 
 #: avify-payments-gateway.php:75
 msgid "API Version"
 msgstr "Versión de API"
 
 #: avify-payments-gateway.php:77
-msgid "Avify Payments API Version"
-msgstr "Versión de Avify Payments API"
+msgid "Avify API Version"
+msgstr "Versión de Avify API"
 
 #: avify-payments-gateway.php:82
 msgid "Charge Description"
@@ -101,11 +102,8 @@ msgid "Online Purchase"
 msgstr "Compra en línea"
 
 #: avify-payments-gateway.php:85
-msgid ""
-"It is the default description of a charge (purchase) to your client's card"
-msgstr ""
-"Es la descripción predeterminada de un cargo (compra) a la tarjeta de tu "
-"cliente"
+msgid "It is the default description of a charge (purchase) to your client's card"
+msgstr "Es la descripción predeterminada de un cargo (compra) a la tarjeta de tu cliente"
 
 #: avify-payments-gateway.php:89
 msgid "Store ID"
@@ -124,8 +122,8 @@ msgid "API Client Secret provided by Avify"
 msgstr "API Client Secret proporcionado por Avify"
 
 #: avify-payments-gateway.php:178
-msgid "An error occurred while connecting to Avify Payments"
-msgstr "Se ha producido un error al conectarse con Avify Payments"
+msgid "An error occurred while connecting to Avify"
+msgstr "Se ha producido un error al conectarse con Avify"
 
 #: avify-payments-gateway.php:197
 msgid "Something went wrong"
@@ -137,8 +135,7 @@ msgstr "Pago completado con éxito"
 
 #: avify-payments-gateway.php:261
 msgid "Card holder, card number, expiry and CVC are required fields"
-msgstr ""
-"Nombre, número de tarjeta, fecha de expiración y CVC son campos obligatorios"
+msgstr "Nombre, número de tarjeta, fecha de expiración y CVC son campos obligatorios"
 
 #: avify-payments-gateway.php:267
 msgid "Card expiration month is invalid"
@@ -152,41 +149,78 @@ msgstr "El año de vencimiento de la tarjeta no es válido"
 msgid "Card security code must have 3 or 4 digits"
 msgstr "El código de seguridad de la tarjeta debe tener 3 o 4 dígitos"
 
-#: avify-payments-gateway.php:290
+#: avify-payments-gateway.php:311
 msgid "Card Verification Code"
 msgstr "Código de verificación"
 
-#: avify-payments-gateway.php:291
+#: avify-payments-gateway.php:312
 msgid "CVC"
 msgstr ""
 
-#: avify-payments-gateway.php:296
+#: avify-payments-gateway.php:317
 msgid "Card holder"
 msgstr "Nombre"
 
-#: avify-payments-gateway.php:300
+#: avify-payments-gateway.php:321
 msgid "Card number"
 msgstr "Número de tarjeta"
 
-#: avify-payments-gateway.php:304
+#: avify-payments-gateway.php:325
 msgid "Expiry (MM/YY)"
 msgstr "Fecha de expiración"
 
-#: avify-payments-gateway.php:305
+#: avify-payments-gateway.php:326
 msgid "MM / YY"
 msgstr "MM/AA"
 
 #: avify-payments-initializer.php:41
-#, php-format
+#, fuzzy, php-format
+#| msgid ""
+#| "Your Avify installation failed. You need to install <a href=\"%1$s\" target=\"_blank\" rel="
+#| "\"noopener noreferrer\">WooCommerce</a> in order to run Avify."
 msgid ""
-"Your Avify Payments installation failed. You need to install <a href=\"%1$s"
-"\" target=\"_blank\" rel=\"noopener noreferrer\">WooCommerce</a> in order to "
-"run Avify Payments."
+"Your Avify installation failed. You need to install <a href=\"%1$s\" target=\"_blank\" rel="
+"\"noopener noreferrer\">WooCommerce</a> in order to run Avify."
 msgstr ""
-"Error en la instalación de Avify Payments. Debe instalar <a href=\"%1$s\" "
-"target=\"_blank\" rel=\"noopener noreferrer\">WooCommerce</a> para ejecutar "
-"Avify Payments."
+"Error en la instalación de Avify. Debe instalar <a href=\"%1$s\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">WooCommerce</a> para ejecutar Avify."
 
-#: avify-payments-initializer.php:80
+#: avify-payments-initializer.php:84
 msgid "Settings"
 msgstr "Ajustes"
+
+#: avify-payments-shipping.php:65 avify-payments-shipping.php:66 avify-payments-shipping.php:317
+msgid "Avify Deliveries"
+msgstr ""
+
+#: avify-payments-shipping.php:67
+msgid "All deliveries in one plugin"
+msgstr ""
+
+#: avify-payments-shipping.php:314
+msgid "Title"
+msgstr ""
+
+#: avify-payments-shipping.php:316
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: avify-payments-shipping.php:321
+msgid "Avify Shop ID"
+msgstr ""
+
+#: avify-payments-shipping.php:323
+msgid "Avify shop unique identifier."
+msgstr ""
+
+#: avify-payments-shipping.php:328
+msgid "Avify URL"
+msgstr ""
+
+#: avify-payments-shipping.php:330
+msgid "Avify Base URL."
+msgstr ""
+
+#: avify-payments-shipping.php:331
+msgid "https://shop.avify.com"
+msgstr ""
