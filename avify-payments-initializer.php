@@ -3,28 +3,28 @@
 if (!defined('ABSPATH')) exit;
 
 /**
- * Plugin Name: Avify Payments for WooCommerce
+ * Plugin Name: Avify
  * Plugin URI:
- * Description: Accept card payments in WooCommerce through Avify Payments.
- * Version: 1.0.3
+ * Description: Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
+ * Version: 1.0.0
  * Author: Avify
  * Author URI: https://avify.com/
  * Text Domain: avify-payments
  * Domain Path: /languages/
  * Requires at least: 5.6
- * Tested up to: 5.9
+ * Tested up to: 5.9.2
  * Requires PHP: 7.0
  */
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 /**
- * Loads the Avify Payments Gateway.
+ * Loads the Avify Gateway.
  */
 function init_avify_payments() {
     if (!class_exists('WC_Payment_Gateway')) {
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('Avify Payments error: You need to install WooCommerce in order to run Avify Payments');
+            error_log('Avify error: You need to install WooCommerce in order to run Avify');
         }
 
         /**
@@ -38,7 +38,7 @@ function init_avify_payments() {
                     printf(
                         wp_kses(
                             __(
-                                'Your Avify Payments installation failed. You need to install <a href="%1$s" target="_blank" rel="noopener noreferrer">WooCommerce</a> in order to run Avify Payments.',
+                                'Your Avify installation failed. You need to install <a href="%1$s" target="_blank" rel="noopener noreferrer">WooCommerce</a> in order to run Avify.',
                                 'avify-payments'
                             ),
                             array(
@@ -62,7 +62,7 @@ function init_avify_payments() {
     include_once('avify-payments-gateway.php');
 
     /**
-     * Adds Avify Payments methods to WooCommerce.
+     * Adds Avify methods to WooCommerce.
      */
     function add_avify_payments_gateway($methods) {
         $methods[] = 'WC_Avify_Payments_Gateway';

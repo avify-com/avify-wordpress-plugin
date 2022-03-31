@@ -2,13 +2,13 @@
 Contributors: juanescobar06, tubipapilla, 
 Tags: avify, checkout, orders, payment gateway, woocommerce
 Requires at least: 5.6
-Tested up to: 5.9
+Tested up to: 5.9.2
 Stable tag: 1.0.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Use Wordpress and Woocommerce through Avify Dashboard.
+Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
 
 ## Description 
 
