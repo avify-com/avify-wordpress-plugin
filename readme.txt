@@ -2,13 +2,13 @@
 Contributors: juanescobar06, tubipapilla, 
 Tags: avify, checkout, orders, payment gateway, woocommerce
 Requires at least: 5.6
-Tested up to: 5.9
+Tested up to: 5.9.2
 Stable tag: 1.0.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Use Wordpress and Woocommerce through Avify Dashboard.
+Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
 
 == Description ==
 
@@ -36,13 +36,13 @@ Do you want to know more about Avify? Please visit our [website](https://avify.c
 
 == Frequently Asked Questions ==
 
-= How much is the processing fee of Avify Payments?=
+= How much is the processing fee of Avify?=
 
 Avify's processing fee is 5.5% + $0.30 per successful transaction. You must have a subscription plan of $29/month to have access to this functionality.
 
 = Where is my money deposited and what is the frecuency? =
 
-Every 15 days Avify Payments sends you a report of your credit card transactions and the money is deposited in the account that you provided when you signed up for the subscription plan.
+Every 15 days Avify sends you a report of your credit card transactions and the money is deposited in the account that you provided when you signed up for the subscription plan.
 
 = Where can I find my dedicated support channel? =
 

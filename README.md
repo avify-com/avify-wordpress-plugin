@@ -8,7 +8,7 @@ Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Use Wordpress and Woocommerce through Avify Dashboard.
+Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
 
 ## Description 
 

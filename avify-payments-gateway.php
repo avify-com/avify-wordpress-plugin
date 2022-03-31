@@ -6,12 +6,12 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 
 	public function __construct() {
 		$this->id = 'avify-payments';
-		$this->method_title = __('Avify Payments', 'avify-payments');
+		$this->method_title = __('Avify', 'avify-payments');
 		$this->method_description = __(
-			'Accept card payments in WooCommerce through Avify Payments',
+			'Connect your WooCommerce account to Avify and send all your orders to one centralized inventory',
 			'avify-payments'
 		);
-		$this->title = __('Avify Payments', 'avify-payments');
+		$this->title = __('Avify', 'avify-payments');
 		$this->has_fields = true;
 		$this->supports = array('default_credit_card_form');
 		$this->init_form_fields();
@@ -67,14 +67,14 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 			'api_mode' => array(
 				'title'     => __('API Mode', 'avify-payments'),
 				'type'      => 'select',
-				'desc_tip'  => __('Avify Payments API Mode', 'avify-payments'),
+				'desc_tip'  => __('Avify API Mode', 'avify-payments'),
 				'options'   => array('production' => 'production', 'sandbox' => 'sandbox'),
 				'custom_attributes' => array('required' => 'required'),
 			),
 			'api_version' => array(
 				'title'     => __('API Version', 'avify-payments'),
 				'type'      => 'select',
-				'desc_tip'  => __('Avify Payments API Version', 'avify-payments'),
+				'desc_tip'  => __('Avify API Version', 'avify-payments'),
 				'options'   => array('v1' => 'v1'),
 				'custom_attributes' => array('required' => 'required'),
 			),
@@ -173,9 +173,9 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 	public function process_payment($order_id) {
 		if (empty($this->store_id) || empty($this->client_secret)) {
 			if (defined('WP_DEBUG') && WP_DEBUG) {
-				error_log('Avify Payments error: Missing Store ID or Client Secret. You have to add them under Woocommerce > Settings > Payments > Avify Payments');
+				error_log('Avify error: Missing Store ID or Client Secret. You have to add them under Woocommerce > Settings > Payments > Avify');
 			}
-			wc_add_notice(__('An error occurred while connecting to Avify Payments', 'avify-payments'), 'error');
+			wc_add_notice(__('An error occurred while connecting to Avify', 'avify-payments'), 'error');
 			return;
 		}
 
@@ -199,11 +199,11 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 			wc_add_notice($error_message, 'error');
 
 			if (defined('WP_DEBUG') && WP_DEBUG) {
-				error_log('Avify Payments error: ' . $error_message);
+				error_log('Avify error: ' . $error_message);
 				$developer_error_message = array_key_exists('developerMessage', $response['error']) ? $response['error']['developerMessage'] : '';
 
 				if (!empty($developer_error_message)) {
-					error_log('Avify Payments error (dev): ' . $developer_error_message);
+					error_log('Avify error (dev): ' . $developer_error_message);
 				}
 			}
 			return;
