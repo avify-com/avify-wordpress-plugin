@@ -1,5 +1,5 @@
 === Avify ===
-Contributors: juanescobar06, tubipapilla, 
+Contributors: juanescobar06, tubipapilla, jupagar77
 Tags: avify, checkout, orders, payment gateway, woocommerce
 Requires at least: 5.6
 Tested up to: 5.9.2
