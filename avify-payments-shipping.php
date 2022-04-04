@@ -65,6 +65,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                     $this->title = __('Avify Deliveries');  // Title shown in admin
                     $this->method_title = __('Avify Deliveries');  // Title shown in admin
                     $this->method_description = __('All deliveries in one plugin'); // Description shown in admin
+                    $this->tax_status = 'none';
                     $this->enabled = "yes"; // This can be added as an setting but for this example its forced enabled
                     $this->supports = array(
                         'shipping-zones',
