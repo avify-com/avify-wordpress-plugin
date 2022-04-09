@@ -11,7 +11,7 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 			'Connect your WooCommerce account to Avify and send all your orders to one centralized inventory',
 			'avify-payments'
 		);
-		$this->title = __('Avify', 'avify-payments');
+		$this->title = __('Credit card', 'avify-payments');
 		$this->has_fields = true;
 		$this->supports = array('default_credit_card_form');
 		$this->init_form_fields();
