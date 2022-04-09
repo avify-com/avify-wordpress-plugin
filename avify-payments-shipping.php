@@ -100,7 +100,8 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                  */
                 public function calculate_shipping($package = array())
                 {
-                    if (is_checkout() && !WC()->session->get('avify_lock')) {
+                    $isCheckout = (is_checkout() || is_cart());
+                    if ($isCheckout && !WC()->session->get('avify_lock')) {
                         WC()->session->set('avify_lock', true);
                         avify_log('---------------------------------------------------');
 
@@ -148,20 +149,21 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
 
                         //Update items
                         foreach ($cart->get_cart() as $item) {
-                            $sku = $item['data']->get_sku();
+                            /*$sku = $item['data']->get_sku();
                             if (strpos($sku, "shop{$AVIFY_SHOP_ID}-") === false) {
                                 $sku = "shop{$AVIFY_SHOP_ID}-{$sku}";
-                            }
+                            }*/
+                            $sku = $item['data']->get_meta( 'avify_sku', true );
                             $update = false;
                             $add = false;
                             if (!isset($avifyLocalQuote[$sku])) {
                                 $add = true;
-                                avify_log("add item...");
+                                avify_log("add item:{$sku}");
                             } else {
                                 $avfLocalItem = explode(':', $avifyLocalQuote[$sku]);
                                 if (floatval($avfLocalItem[1]) != floatval($item['quantity'])) {
                                     $update = true;
-                                    avify_log("update item {$avfLocalItem[0]}...");
+                                    avify_log("update item {$avfLocalItem[0]}:{$sku}");
                                 }
                             }
 
@@ -199,17 +201,18 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         foreach ($avifyLocalQuote as $avfSku => $avfLocalItem) {
                             $found = false;
                             foreach ($cart->get_cart() as $item) {
-                                $sku = $item['data']->get_sku();
+                                /*$sku = $item['data']->get_sku();
                                 if (strpos($sku, "shop{$AVIFY_SHOP_ID}-") === false) {
                                     $sku = "shop{$AVIFY_SHOP_ID}-{$sku}";
-                                }
+                                }*/
+                                $sku = $item['data']->get_meta( 'avify_sku', true );
                                 if ($sku == $avfSku) {
                                     $found = true;
                                 }
                             }
                             if (!$found) {
                                 $avfLocalItem = explode(':', $avfLocalItem);
-                                avify_log("delete item {$avfLocalItem[0]}...");
+                                avify_log("delete item {$avfLocalItem[0]}:{$avfSku}");
                                 Curl::delete($AVIFY_URL . "/rest//V1/guest-carts/{$avifyQuoteId}/items/{$avfLocalItem[0]}");
                                 unset($avifyLocalQuote[$avfSku]);
                             }
@@ -300,7 +303,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         }
                     }
 
-                    if (!is_checkout()) {
+                    if (!$isCheckout) {
                         WC()->session->set('avify_lock', false);
                     }
                 }
@@ -367,5 +370,5 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         WC()->session->set('avify_local_quote_' . $wooCartKey, NULL);
         WC()->session->set('avify_cart_uuid', NULL);
     }
-    add_action('woocommerce_thankyou', 'save_order_avify_meta', 10, 1);
+    add_action('woocommerce_checkout_update_order_meta', 'save_order_avify_meta', 10, 1);
 }
