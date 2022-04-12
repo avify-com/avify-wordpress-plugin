@@ -193,6 +193,16 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                                     avify_log($avifyItem);
                                     if ($avifyItem['success']) {
                                         $avifyLocalQuote[$sku] = $avifyItem['data']['item_id'] . ':' . $item['quantity'];
+                                    } else {
+                                        if(isset($avifyItem['httpCode'])) {
+                                            if($avifyItem['httpCode'] == 404) {
+                                                //Clear
+                                                WC()->session->set('avify_quote_' . $wooCartKey, NULL);
+                                                WC()->session->set('avify_shop_' . $wooCartKey, NULL);
+                                                WC()->session->set('avify_local_quote_' . $wooCartKey, NULL);
+                                                WC()->session->set('avify_cart_uuid', NULL);
+                                            }
+                                        }
                                     }
                                 }
                             }
