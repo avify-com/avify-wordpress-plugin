@@ -7,6 +7,23 @@ namespace App\Utils;
 use App\Utils\Json;
 
 class Curl {
+    private static function avify_log($entry, $mode = 'a', $file = 'avify')
+    {
+        // Get WordPress uploads directory.
+        $upload_dir = wp_upload_dir();
+        $upload_dir = $upload_dir['basedir'];
+        // If the entry is array, json_encode.
+        if (is_array($entry)) {
+            $entry = json_encode($entry);
+        }
+        // Write the log file.
+        $file = $upload_dir . '/wc-logs/' . $file . '.log';
+        $file = fopen($file, $mode);
+        $bytes = fwrite($file, current_time('mysql') . " : " . $entry . "\n");
+        fclose($file);
+        return $bytes;
+    }
+
     /**
      * GET request with cURL.
      *
@@ -15,8 +32,8 @@ class Curl {
      *
      * @return array JSON response with httpCode, success (true/false) and data or error.
      */
-    public static function get(string $url, array $headers = null) {
-        return self::http_request($url, $headers);
+    public static function get(string $url, array $headers = null, &$responseHeaders = []) {
+        return self::http_request($url, $headers, null, 'GET', $responseHeaders);
     }
 
     /**
@@ -28,8 +45,8 @@ class Curl {
      *
      * @return array JSON response with httpCode, success (true/false) and data or error.
      */
-    public static function post(string $url, array $headers = null, string $payload = null) {
-        return self::http_request($url, $headers, $payload, 'POST');
+    public static function post(string $url, array $headers = null, string $payload = null, &$responseHeaders = []) {
+        return self::http_request($url, $headers, $payload, 'POST', $responseHeaders);
     }
 
     /**
@@ -38,16 +55,16 @@ class Curl {
      * @param string|null $payload
      * @return array
      */
-    public static function put(string $url, array $headers = null, string $payload = null) {
-        return self::http_request($url, $headers, $payload,'PUT');
+    public static function put(string $url, array $headers = null, string $payload = null, &$responseHeaders = []) {
+        return self::http_request($url, $headers, $payload,'PUT', $responseHeaders);
     }
 
     /**
      * @param string $url
      * @return array
      */
-    public static function delete(string $url) {
-        return self::http_request($url, null, null, 'DELETE');
+    public static function delete(string $url, array $headers = null, &$responseHeaders = []) {
+        return self::http_request($url, $headers, null, 'DELETE', $responseHeaders);
     }
 
     /**
@@ -60,7 +77,7 @@ class Curl {
      *
      * @return array JSON response with httpCode, success (true/false) and data or error.
      */
-    private static function http_request(string $url, array $headers = null, string $payload = null, $method = 'GET') {
+    private static function http_request(string $url, array $headers = null, string $payload = null, $method = 'GET', &$responseHeaders = []) {
         $curl_handle = curl_init();
         curl_setopt($curl_handle, CURLOPT_URL, $url);
 
@@ -76,6 +93,17 @@ class Curl {
         }
 
         curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+
+        curl_setopt($curl_handle, CURLOPT_HEADERFUNCTION,
+            function($curl, $header) use (&$responseHeaders) {
+                $len = strlen($header);
+                $header = explode(':', $header, 2);
+                if (count($header) < 2) // ignore invalid headers
+                    return $len;
+                $responseHeaders[strtolower(trim($header[0]))][] = trim($header[1]);
+                return $len;
+            }
+        );
 
         $curl_response = curl_exec($curl_handle);
         $http_code = curl_getinfo($curl_handle, CURLINFO_HTTP_CODE);
