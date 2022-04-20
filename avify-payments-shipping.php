@@ -316,9 +316,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         foreach ($avifyRates['data'] as $avifyRate) {
                             if ($avifyRate['available']) {
                                 avify_log("{$avifyRate['carrier_code']}_{$avifyRate['method_code']} : {$avifyRate['amount']}");
+                                $title = explode('|', $avifyRate['carrier_title']);
+                                $title = $title[0];
                                 $rates[] = [
                                     "id" => "avfdeliveries-{$avifyRate['carrier_code']}{$avifyRate['method_code']}",
-                                    "label" => $avifyRate['method_title'],
+                                    "label" => $title . ' - ' . $avifyRate['method_title'],
                                     "cost" => $avifyRate['amount'],
                                     "package" => $package,
                                     "meta_data" => [
