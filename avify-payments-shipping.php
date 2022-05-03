@@ -252,7 +252,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         }
 
                         //Coords
-                            $latitude = isset($_POST['lpac_latitude']) ? sanitize_text_field($_POST['lpac_latitude']) : 0.00;
+                        $latitude = isset($_POST['lpac_latitude']) ? sanitize_text_field($_POST['lpac_latitude']) : 0.00;
                         $longitude = isset($_POST['lpac_longitude']) ? sanitize_text_field($_POST['lpac_longitude']) : 0.00;
                         $fields = isset($_POST['post_data']) ? sanitize_text_field($_POST['post_data']) : null;
                         if ($fields) {
