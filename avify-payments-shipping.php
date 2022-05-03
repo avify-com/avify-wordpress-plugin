@@ -252,10 +252,11 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         }
 
                         //Coords
-                        $latitude = 0.00;
-                        $longitude = 0.00;
-                        if (isset($_POST['post_data'])) {
-                            $fields = explode('&', $_POST['post_data']);
+                            $latitude = isset($_POST['lpac_latitude']) ? sanitize_text_field($_POST['lpac_latitude']) : 0.00;
+                        $longitude = isset($_POST['lpac_longitude']) ? sanitize_text_field($_POST['lpac_longitude']) : 0.00;
+                        $fields = isset($_POST['post_data']) ? sanitize_text_field($_POST['post_data']) : null;
+                        if ($fields) {
+                            $fields = explode('&', $fields);
                             foreach ($fields as $field) {
                                 $field = explode('=', $field);
                                 if (count($field) == 2) {
@@ -267,16 +268,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                                     }
                                 }
                             }
-                        } else {
-                            if(isset($_POST['lpac_latitude'])) {
-                                $latitude = $_POST['lpac_latitude'];
-                            }
-                            if(isset($_POST['lpac_longitude'])) {
-                                $longitude = $_POST['lpac_longitude'];
-                            }
                         }
-
-                        //avify_log($_POST);
 
                         $address = $package['destination'];
                         $avifyRates = Curl::post(
