@@ -195,7 +195,8 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 		$error_message = '';
 		if (array_key_exists('error', $response)) {
 			$error_message = array_key_exists('displayMessage', $response['error']) ? $response['error']['displayMessage'] :  __('Something went wrong', 'avify-payments');
-			$customer_order->add_order_note('Error: ' . $error_message);
+			$customer_order->add_order_note($error_message);
+			$customer_order->update_status('failed', $error_message);
 			wc_add_notice($error_message, 'error');
 
 			if (defined('WP_DEBUG') && WP_DEBUG) {
