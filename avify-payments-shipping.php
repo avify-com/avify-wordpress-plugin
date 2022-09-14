@@ -358,7 +358,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                             'title' => __('Avify URL', 'woocommerce'),
                             'type' => 'text',
                             'description' => __('Avify Base URL.', 'woocommerce'),
-                            'default' => __('https://shop.avify.com', 'woocommerce'),
+                            'default' => '',
                             'desc_tip' => true
                         )
                     );

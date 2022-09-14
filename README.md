@@ -3,7 +3,7 @@ Contributors: juanescobar06, tubipapilla, jupagar77
 Tags: avify, checkout, orders, payment gateway, woocommerce
 Requires at least: 5.6
 Tested up to: 5.9.2
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -57,7 +57,11 @@ When you sign up for a monthly subscription, our customer success department wil
 * To connect the orders enable in the avify dashboard Integrations > Woocommerce
 ## Changelog 
 
-### 1.0.2
+### 1.0.3
+
+* Remove avify url as default value.
+
+= 1.0.2 =
 
 * Fixed bug when updating status of failed orders.
 

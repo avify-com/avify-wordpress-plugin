@@ -233,7 +233,3 @@ msgstr ""
 #: avify-payments-shipping.php:331
 msgid "Avify Base URL."
 msgstr ""
-
-#: avify-payments-shipping.php:332
-msgid "https://shop.avify.com"
-msgstr ""
