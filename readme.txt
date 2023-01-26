@@ -30,7 +30,7 @@ Process payments and display prices in USD, CRC, MXN.
 * Customer data and card encryption.
 * Processing of payments in USD or CRC.
 * Sandbox testing.
-* Sincronize orders
+* Synchronize orders
 
 Do you want to know more about Avify? Please visit our [website](https://avify.com/) and find out what we can do.
 
