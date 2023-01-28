@@ -66,8 +66,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 public function __construct($instance_id = 0)
                 {
                     parent::__construct($instance_id);
-
-                    $this->id = 'avfdeliveries'; // Id for your shipping method. Should be unique.
+                    $this->id = 'avfdeliveries'; // ID for your shipping method. Should be unique.
                     $this->instance_id = absint($instance_id);
                     $this->title = __('Avify Deliveries');  // Title shown in admin
                     $this->method_title = __('Avify Deliveries');  // Title shown in admin
@@ -107,14 +106,9 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                  */
                 public function calculate_shipping($package = array())
                 {
-                    //WC()->session->set('avify_lock', false);
-
                     $isCheckout = (is_checkout() || is_cart());
-
-                    if ($isCheckout && !WC()->session->get('avify_lock')) {
-                        WC()->session->set('avify_lock', true);
+                    if ($isCheckout) {
                         avify_log('---------------------------------------------------');
-
                         $AVIFY_URL = $this->get_option('avify_url');
                         $AVIFY_SHOP_ID = $this->get_option('avify_shop_id');
                         $sessionUUID = WC()->session->get('avify_session_uuid');
@@ -126,7 +120,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         $cart = WC()->cart;
 
                         if (!isset($package['destination'])) {
-                            WC()->session->set('avify_lock', false);
                             return;
                         }
 
@@ -170,7 +163,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         if (!isset($avifyRates['data'])) {
                             avify_log('no rates found on avify.');
                             avify_log($avifyRates);
-                            WC()->session->set('avify_lock', false);
                             return;
                         }
                         if(isset($responseHeaders['set-cookie'][0])) {
@@ -198,14 +190,6 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         foreach ($rates as $rate) {
                             $this->add_rate($rate);
                         }
-
-                        WC()->session->set('avify_lock', false);
-                    } else {
-                        avify_log(WC()->session->get('avify_lock') ? 'locked.' : 'no-locked.');
-                    }
-
-                    if (!$isCheckout) {
-                        WC()->session->set('avify_lock', false);
                     }
                 }
 
