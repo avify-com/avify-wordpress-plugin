@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) exit;
  * Plugin Name: Avify
  * Plugin URI:
  * Description: Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
- * Version: 1.0.7
+ * Version: 1.0.8
  * Author: Avify
  * Author URI: https://avify.com/
  * Text Domain: avify-payments
@@ -19,9 +19,10 @@ if (!defined('ABSPATH')) exit;
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 /**
- * Loads the Avify Gateway.
+ * Loads the Avify Plugin.
  */
-function init_avify_payments() {
+function init_avify() {
+    /** Avify Gateway */
     if (!class_exists('WC_Payment_Gateway')) {
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('Avify error: You need to install WooCommerce in order to run Avify');
@@ -61,20 +62,19 @@ function init_avify_payments() {
     }
     include_once('avify-payments-gateway.php');
 
-    /**
-     * Adds Avify methods to WooCommerce.
-     */
     function add_avify_payments_gateway($methods) {
         $methods[] = 'WC_Avify_Payments_Gateway';
         return $methods;
     }
     add_filter('woocommerce_payment_gateways', 'add_avify_payments_gateway');
 
-
     /** Avify Shipping */
-    include_once('avify-payments-shipping.php');
+    include_once('avify-shipping.php');
+
+    /** Avify Custom Options */
+    include_once('avify-custom-options.php');
 }
-add_action('plugins_loaded', 'init_avify_payments', 0);
+add_action('plugins_loaded', 'init_avify', 0);
 
 /**
  * Provides the following action links to the plugin: settings page.
