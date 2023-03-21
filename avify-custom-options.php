@@ -37,13 +37,19 @@ function add_fields_before_add_to_cart()
         echo "<p><label for='$name'><strong>{$avfCustomOpt['store_title']}" . ($price ? " (+{$price}) " : "") . ($avfCustomOpt['is_require'] ? '<span style="color: red">*</span>' : '') . " :</strong></label></p>";
         switch ($avfCustomOpt['type']) {
             case "field":
-                echo "<p><input id='$name' type='text' name='$name' maxlength='{$avfCustomOpt['max_characters']}'/><span class='aco-spec'>max: {$avfCustomOpt['max_characters']}</span></p>";
+                echo "<p><input id='$name' type='text' name='$name' maxlength='{$avfCustomOpt['max_characters']}'/><span class='aco-spec'>" . __('Max Characters', 'avify-wordpress') . ": {$avfCustomOpt['max_characters']}</span></p>";
                 break;
             case "area":
-                echo "<p><textarea id='$name' name='$name' maxlength='{$avfCustomOpt['max_characters']}'></textarea><span class='aco-spec'>max: {$avfCustomOpt['max_characters']}</span></p>";
+                echo "<p><textarea id='$name' name='$name' maxlength='{$avfCustomOpt['max_characters']}'></textarea><span class='aco-spec'>" . __('Max Characters', 'avify-wordpress') . ": {$avfCustomOpt['max_characters']}</span></p>";
                 break;
             case "file":
-                echo "<p><input id='$name' accept='{$avfCustomOpt['file_extension']}' type='file' name='$name'/><span class='aco-spec'>{$avfCustomOpt['file_extension']}</span></p>";
+                echo "<p><input id='$name' accept='{$avfCustomOpt['file_extension']}' type='file' name='$name'/><span class='aco-spec'>" . __('Allowed Extensions', 'avify-wordpress') . ": {$avfCustomOpt['file_extension']}</span></p>";
+                if (floatval($avfCustomOpt['image_size_x'])) {
+                    echo "<p><span class='aco-spec'>" . __('Max Width', 'avify-wordpress') . ": {$avfCustomOpt['image_size_x']}px</span></p>";
+                }
+                if (floatval($avfCustomOpt['image_size_y'])) {
+                    echo "<p><span class='aco-spec'>" . __('Max Height', 'avify-wordpress') . ": {$avfCustomOpt['image_size_y']}px</span></p>";
+                }
                 break;
             case "drop_down":
                 $options = '';
@@ -104,22 +110,42 @@ function add_cart_item_data($cart_item_data, $product_id)
                     $id = str_replace('avify_option_', '', $fileKey);
                     $id = explode('-', $id);
                     $found = false;
+                    $width = 0;
+                    $height = 0;
                     foreach ($avifyCustomOptions as $avfCustomOpt) {
                         if ($avfCustomOpt['option_id'] == $id[0]) {
                             $found = true;
+                            $width = floatval($avfCustomOpt['image_size_x']);
+                            $height = floatval($avfCustomOpt['image_size_y']);
+                            $allowedTypes = explode(',', $avfCustomOpt['file_extension']);
+
                             $type = $file['type'];
                             $type = str_replace('image/', '', $type);
-                            if (!in_array($type, explode(',', $avfCustomOpt['file_extension']))) {
-                                throw new \Exception('Invalid file extension.');
+                            foreach ($allowedTypes as &$allowedType) {
+                                $allowedType = trim($allowedType);
+                            }
+                            if (!in_array($type, $allowedTypes)) {
+                                throw new \Exception(__('Invalid file extension.', 'avify-wordpress'));
                             }
                         }
                     }
+
                     if ($found) {
                         $attachment_id = media_handle_upload($fileKey, 0);
                         if (is_wp_error($attachment_id)) {
-                            throw new \Exception('Error uploading file.');
+                            throw new \Exception(__('Error uploading file.', 'avify-wordpress'));
                         }
                         $attachment = wp_prepare_attachment_for_js($attachment_id);
+                        if ($width) {
+                            if (floatval($attachment['width']) > $width) {
+                                throw new \Exception(__('Invalid file width.', 'avify-wordpress'));
+                            }
+                        }
+                        if ($height) {
+                            if (floatval($attachment['height']) > $height) {
+                                throw new \Exception(__('Invalid file height.', 'avify-wordpress'));
+                            }
+                        }
                         $cart_item_data['avify_custom_options'][$fileKey] = $attachment['url'];
                     }
                 }
@@ -143,7 +169,7 @@ function add_cart_item_data($cart_item_data, $product_id)
 
         if ($isRequire) {
             if (!$found || empty($valueFound)) {
-                throw new \Exception("Missing required field '{$avfCustomOpt['store_title']}'.");
+                throw new \Exception(sprintf(__("Missing required field '%s'.", 'avify-wordpress'), $avfCustomOpt['store_title']));
             }
         }
     }
@@ -155,7 +181,7 @@ function add_cart_item_data($cart_item_data, $product_id)
 add_filter('woocommerce_get_item_data', 'get_item_data', 25, 2);
 function get_item_data($cart_data, $cart_item)
 {
-    if(isset($cart_item['avify_custom_options'])) {
+    if (isset($cart_item['avify_custom_options'])) {
         if (!empty($cart_item['avify_custom_options'])) {
             $product = wc_get_product($cart_item['product_id']);
             $avifyCustomOptions = getAvifyCustomOptions($product);
@@ -212,11 +238,11 @@ add_action('woocommerce_before_calculate_totals', 'add_custom_price');
 function add_custom_price(WC_Cart $cart_object)
 {
     foreach ($cart_object->get_cart() as $item) {
-        /** @var $itemData WC_Product **/
+        /** @var $itemData WC_Product * */
         $itemData = $item['data'];
         $product = wc_get_product($itemData->get_id());
         $avifyCustomOptions = getAvifyCustomOptions($product);
-        if(isset($item['avify_custom_options'])) {
+        if (isset($item['avify_custom_options'])) {
             $plus = 0;
             foreach ($avifyCustomOptions as $avfCustomOpt) {
                 foreach ($item['avify_custom_options'] as $id => $value) {
@@ -251,7 +277,7 @@ function add_custom_price(WC_Cart $cart_object)
 add_action('woocommerce_checkout_create_order_line_item', 'add_order_item_data', 10, 3);
 function add_order_item_data(WC_Order_Item_Product $cartItem, string $cartItemKey, array $values): void
 {
-    if(isset($values['avify_custom_options'])) {
+    if (isset($values['avify_custom_options'])) {
         if (!empty($values['avify_custom_options']) && is_array($values['avify_custom_options'])) {
             $cartItem->add_meta_data('avify_custom_options', json_encode($values['avify_custom_options']), true);
         }
@@ -274,9 +300,9 @@ add_action('woocommerce_order_item_meta_start', 'get_order_item_data', 10, 3);
  */
 function get_order_item_data($item_id, $item)
 {
-    if(isset($item['avify_custom_options'])) {
+    if (isset($item['avify_custom_options'])) {
         if (!empty($item['avify_custom_options'])) {
-            if(is_string($item['avify_custom_options'])) {
+            if (is_string($item['avify_custom_options'])) {
                 $item['avify_custom_options'] = json_decode($item['avify_custom_options'], true);
             }
             $product = wc_get_product($item['product_id']);

@@ -209,14 +209,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         'avify_shop_id' => array(
                             'title' => __('Avify Shop ID', 'woocommerce'),
                             'type' => 'text',
-                            'description' => __('Avify shop unique identifier.', 'woocommerce'),
+                            'description' => __('Avify Shop UUID', 'woocommerce'),
                             'default' => null,
                             'desc_tip' => true
                         ),
                         'avify_url' => array(
                             'title' => __('Avify URL', 'woocommerce'),
                             'type' => 'text',
-                            'description' => __('Avify Base URL.', 'woocommerce'),
+                            'description' => __('Avify Base URL', 'woocommerce'),
                             'default' => '',
                             'desc_tip' => true
                         )

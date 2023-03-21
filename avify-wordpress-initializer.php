@@ -6,11 +6,11 @@ if (!defined('ABSPATH')) exit;
  * Plugin Name: Avify
  * Plugin URI:
  * Description: Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
- * Version: 1.0.8
+ * Version: 1.0.9
  * Author: Avify
  * Author URI: https://avify.com/
- * Text Domain: avify-payments
- * Domain Path: /languages/
+ * Text Domain: avify-wordpress
+ * Domain Path: /languages
  * Requires at least: 5.6
  * Tested up to: 6.1.1
  * Requires PHP: 7.0
@@ -39,8 +39,8 @@ function init_avify() {
                     printf(
                         wp_kses(
                             __(
-                                'Your Avify installation failed. You need to install <a href="%1$s" target="_blank" rel="noopener noreferrer">WooCommerce</a> in order to run Avify.',
-                                'avify-payments'
+                                'Your Avify installation failed. You need to install WooCommerce in order to run Avify.',
+                                'avify-wordpress'
                             ),
                             array(
                                 'a' => array(
@@ -81,7 +81,7 @@ add_action('plugins_loaded', 'init_avify', 0);
  */
 function avify_payments_action_links($links) {
     $plugin_links = array(
-        '<a href="' . admin_url('admin.php?page=wc-settings&tab=checkout') . '">' . __('Settings', 'avify-payments') . '</a>',
+        '<a href="' . admin_url('admin.php?page=wc-settings&tab=checkout') . '">' . __('Settings', 'avify-wordpress') . '</a>',
     );
     return array_merge($plugin_links, $links);
 }
@@ -90,7 +90,7 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'avify_payments_a
 /**
  * Set up plugin localization.
  */
-function load_avify_payments_textdomain() {
-    load_plugin_textdomain('avify-payments', false, dirname(plugin_basename(__FILE__)) . '/languages');
+function load_avify_wordpress_textdomain() {
+    load_plugin_textdomain('avify-wordpress', false, dirname(plugin_basename(__FILE__)) . '/languages');
 }
-add_action('plugins_loaded', 'load_avify_payments_textdomain');
+add_action('plugins_loaded', 'load_avify_wordpress_textdomain');

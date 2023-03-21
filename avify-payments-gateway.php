@@ -6,12 +6,12 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 
 	public function __construct() {
 		$this->id = 'avify-payments';
-		$this->method_title = __('Avify', 'avify-payments');
+		$this->method_title = 'Avify';
 		$this->method_description = __(
 			'Connect your WooCommerce account to Avify and send all your orders to one centralized inventory',
-			'avify-payments'
+			'avify-wordpress'
 		);
-		$this->title = __('Credit card', 'avify-payments');
+		$this->title = __('Credit card', 'avify-wordpress');
 		$this->has_fields = true;
 		$this->supports = array('default_credit_card_form');
 		$this->init_form_fields();
@@ -35,66 +35,66 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 	public function init_form_fields() {
 		$this->form_fields = array(
 			'enabled' => array(
-				'title'     => __('Enabled / Disabled', 'avify-payments'),
-				'label'     => __('Activate this payment method', 'avify-payments'),
+				'title'     => __('Enabled / Disabled', 'avify-wordpress'),
+				'label'     => __('Activate this payment method', 'avify-wordpress'),
 				'type'      => 'checkbox',
 				'default'   => 'no',
 			),
 			'payment_method_title' => array(
-				'title'     => __('Payment Method Title', 'avify-payments'),
+				'title'     => __('Payment Method Title', 'avify-wordpress'),
 				'type'      => 'text',
-				'desc_tip'  => __('Title to display for the payment method', 'avify-payments'),
-				'default'   => __('Card', 'avify-payments'),
+				'desc_tip'  => __('Title to display for the payment method', 'avify-wordpress'),
+				'default'   => __('Card', 'avify-wordpress'),
 				'custom_attributes' => array('required' => 'required'),
 			),
 			'description' => array(
-				'title'     => __('Description', 'avify-payments'),
+				'title'     => __('Description', 'avify-wordpress'),
 				'type'      => 'text',
-				'desc_tip'  => __('Payment Description', 'avify-payments'),
-				'default'   => __('Pay with your debit or credit card', 'avify-payments'),
+				'desc_tip'  => __('Payment Description', 'avify-wordpress'),
+				'default'   => __('Pay with your debit or credit card', 'avify-wordpress'),
 				'custom_attributes' => array('required' => 'required'),
 			),
 			'entity_description' => array(
-				'title'     => __('Banking detail (22 characters max)', 'avify-payments'),
+				'title'     => __('Banking detail (22 characters max)', 'avify-wordpress'),
 				'type'      => 'text',
 				'default'   => get_bloginfo('name'),
-				'desc_tip'  => __("Detail that appears on the client's bank account statement", 'avify-payments'),
+				'desc_tip'  => __("Detail that appears on the client's bank account statement", 'avify-wordpress'),
 				'custom_attributes' => array(
 					'required' => 'required',
 					'maxlength' => '22'
 				),
 			),
 			'api_mode' => array(
-				'title'     => __('API Mode', 'avify-payments'),
+				'title'     => __('API Mode', 'avify-wordpress'),
 				'type'      => 'select',
-				'desc_tip'  => __('Avify API Mode', 'avify-payments'),
+				'desc_tip'  => __('Avify API Mode', 'avify-wordpress'),
 				'options'   => array('production' => 'production', 'sandbox' => 'sandbox'),
 				'custom_attributes' => array('required' => 'required'),
 			),
 			'api_version' => array(
-				'title'     => __('API Version', 'avify-payments'),
+				'title'     => __('API Version', 'avify-wordpress'),
 				'type'      => 'select',
-				'desc_tip'  => __('Avify API Version', 'avify-payments'),
+				'desc_tip'  => __('Avify API Version', 'avify-wordpress'),
 				'options'   => array('v1' => 'v1'),
 				'custom_attributes' => array('required' => 'required'),
 			),
 			'charge_description' => array(
-				'title'     => __('Charge Description', 'avify-payments'),
+				'title'     => __('Charge Description', 'avify-wordpress'),
 				'type'      => 'text',
-				'default'   => __('Online Purchase', 'avify-payments'),
-				'desc_tip'  => __("It is the default description of a charge (purchase) to your client's card", 'avify-payments'),
+				'default'   => __('Online Purchase', 'avify-wordpress'),
+				'desc_tip'  => __("It is the default description of a charge (purchase) to your client's card", 'avify-wordpress'),
 				'custom_attributes' => array('required' => 'required'),
 			),
 			'store_id' => array(
-				'title'     => __('Store ID', 'avify-payments'),
+				'title'     => __('Store ID', 'avify-wordpress'),
 				'type'      => 'text',
-				'desc_tip'  => __('Unique identifier of your store', 'avify-payments'),
+				'desc_tip'  => __('Unique identifier of your store', 'avify-wordpress'),
 				'custom_attributes' => array('required' => 'required'),
 			),
 			'client_secret' => array(
-				'title'     => __('Client Secret', 'avify-payments'),
+				'title'     => __('Client Secret', 'avify-wordpress'),
 				'type'      => 'password',
-				'desc_tip'  => __('API Client Secret provided by Avify', 'avify-payments'),
+				'desc_tip'  => __('API Client Secret provided by Avify', 'avify-wordpress'),
 				'custom_attributes' => array('required' => 'required'),
 			)
 		);
@@ -102,9 +102,9 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 
 	/**
 	 * Create a payload object with Avify's custom structure.
-	 * 
+	 *
 	 * @param WC_Order $customer_order
-	 * 
+	 *
 	 * @return array Structured payment info.
 	 */
 	private function get_formatted_payment_info(WC_Order $customer_order) {
@@ -167,7 +167,7 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 	 * Process the payment and return the result.
 	 *
 	 * @param int $order_id Order ID.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function process_payment($order_id) {
@@ -175,7 +175,7 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 			if (defined('WP_DEBUG') && WP_DEBUG) {
 				error_log('Avify error: Missing Store ID or Client Secret. You have to add them under Woocommerce > Settings > Payments > Avify');
 			}
-			wc_add_notice(__('An error occurred while connecting to Avify', 'avify-payments'), 'error');
+			wc_add_notice(__('An error occurred while connecting to Avify', 'avify-wordpress'), 'error');
 			return;
 		}
 
@@ -194,7 +194,7 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 
 		$error_message = '';
 		if (array_key_exists('error', $response)) {
-			$error_message = array_key_exists('displayMessage', $response['error']) ? $response['error']['displayMessage'] :  __('Something went wrong', 'avify-payments');
+			$error_message = array_key_exists('displayMessage', $response['error']) ? $response['error']['displayMessage'] :  __('Something went wrong', 'avify-wordpress');
 			$customer_order->add_order_note($error_message);
 			$customer_order->update_status('failed', $error_message);
 			wc_add_notice($error_message, 'error');
@@ -210,7 +210,7 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 			return;
 		}
 		if (array_key_exists('httpCode', $response) && $response['httpCode'] === 200) {
-			$customer_order->add_order_note(__('Payment completed successfully', 'avify-payments'));
+			$customer_order->add_order_note(__('Payment completed successfully', 'avify-wordpress'));
 			$customer_order->payment_complete();
 			$woocommerce->cart->empty_cart();
 			return array(
@@ -223,7 +223,7 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 	/**
 	 * Creates a formatted version of the card information, removing dashes, spaces,
 	 * and separating the month and year.
-	 * 
+	 *
 	 * @return array Formatted card info.
 	 */
 	public function get_formatted_card_info() {
@@ -260,20 +260,20 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 		) {
 			wc_add_notice(__(
 				'Card holder, card number, expiry and CVC are required fields',
-				'avify-payments'
+				'avify-wordpress'
 			), 'error');
 			return false;
 		}
 		if (strlen($exp_month) < 2 || $exp_month > 12 || $exp_month < 1) {
-			wc_add_notice(__('Card expiration month is invalid', 'avify-payments'), 'error');
+			wc_add_notice(__('Card expiration month is invalid', 'avify-wordpress'), 'error');
 			return false;
 		}
 		if (strlen($exp_year) < 4 || $exp_year < intval(date('Y'))) {
-			wc_add_notice(__('Card expiration year is invalid', 'avify-payments'), 'error');
+			wc_add_notice(__('Card expiration year is invalid', 'avify-wordpress'), 'error');
 			return false;
 		}
 		if (strlen($cvc) < 3) {
-			wc_add_notice(__('Card security code must have 3 or 4 digits', 'avify-payments'), 'error');
+			wc_add_notice(__('Card security code must have 3 or 4 digits', 'avify-wordpress'), 'error');
 			return false;
 		}
 		return true;
@@ -309,21 +309,21 @@ class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
 		);
 
 		$cvc_field = '<p class="form-row form-row-last">
-            <label for="' . esc_attr($this->id) . '-card-cvc">' . esc_html__('Card Verification Code', 'avify-payments') . '&nbsp;<span class="required">*</span></label>
+            <label for="' . esc_attr($this->id) . '-card-cvc">' . esc_html__('Card Verification Code', 'avify-wordpress') . '&nbsp;<span class="required">*</span></label>
             <input id="' . esc_attr($this->id) . '-card-cvc" class="input-text wc-credit-card-form-card-cvc" inputmode="numeric" autocomplete="off" autocorrect="no" autocapitalize="no" spellcheck="no" type="tel" maxlength="4" placeholder="' . esc_attr__('CVC', 'woocommerce') . '" ' . $this->field_name('card-cvc') . ' style="width:100px" />
         </p>';
 
 		$default_fields = array(
 			'card-holder-field' => '<p class="form-row form-row-wide">
-                <label for="' . esc_attr($this->id) . '-card-holder">' . esc_html__('Card holder', 'avify-payments') . '&nbsp;<span class="required">*</span></label>
+                <label for="' . esc_attr($this->id) . '-card-holder">' . esc_html__('Card holder', 'avify-wordpress') . '&nbsp;<span class="required">*</span></label>
                 <input id="' . esc_attr($this->id) . '-card-holder" class="input-text" type="text"' . $this->field_name('card-holder') . ' />
             </p>',
 			'card-number-field' => '<p class="form-row form-row-wide">
-                <label for="' . esc_attr($this->id) . '-card-number">' . esc_html__('Card number', 'avify-payments') . '&nbsp;<span class="required">*</span></label>
+                <label for="' . esc_attr($this->id) . '-card-number">' . esc_html__('Card number', 'avify-wordpress') . '&nbsp;<span class="required">*</span></label>
                 <input id="' . esc_attr($this->id) . '-card-number" class="input-text wc-credit-card-form-card-number" inputmode="numeric" autocomplete="cc-number" autocorrect="no" autocapitalize="no" spellcheck="no" type="tel" placeholder="&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;" ' . $this->field_name('card-number') . ' />
             </p>',
 			'card-expiry-field' => '<p class="form-row form-row-first">
-                <label for="' . esc_attr($this->id) . '-card-expiry">' . esc_html__('Expiry (MM/YY)', 'avify-payments') . '&nbsp;<span class="required">*</span></label>
+                <label for="' . esc_attr($this->id) . '-card-expiry">' . esc_html__('Expiry (MM/YY)', 'avify-wordpress') . '&nbsp;<span class="required">*</span></label>
                 <input id="' . esc_attr($this->id) . '-card-expiry" class="input-text wc-credit-card-form-card-expiry" inputmode="numeric" autocomplete="cc-exp" autocorrect="no" autocapitalize="no" spellcheck="no" type="tel" placeholder="' . esc_attr__('MM / YY', 'woocommerce') . '" ' . $this->field_name('card-expiry') . ' />
             </p>',
 		);
