@@ -2,6 +2,10 @@
 
 function getAvifyCustomOptions($product)
 {
+    if($product->get_parent_id()) {
+        $product = wc_get_product($product->get_parent_id());
+    }
+
     $avifyCustomOptions = [];
     foreach ($product->get_meta_data() as $meta_datum) {
         if ($meta_datum->key == 'avify_custom_options') {
