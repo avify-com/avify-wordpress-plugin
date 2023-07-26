@@ -22,7 +22,6 @@ function add_fields_before_add_to_cart()
     global $product;
     $avifyCustomOptions = getAvifyCustomOptions($product);
 
-    echo "<div class='avify-custom-options'>";
     echo "<style>
             .avify-custom-options input:not([type='checkbox']):not([type='radio']) {width: 100%; padding: 5px}
             .avify-custom-options input[type='checkbox'] + label {margin-right: 10px}
@@ -32,6 +31,7 @@ function add_fields_before_add_to_cart()
             .avify-custom-options p {margin: auto}
             .avify-custom-options .aco-spec {font-size: 12px; font-style: italic}
           </style>";
+    echo "<div class='avify-custom-options'>";
     foreach ($avifyCustomOptions as $avfCustomOpt) {
         if ($price = floatval($avfCustomOpt['price'])) {
             $price = wc_price($price, array('currency' => get_woocommerce_currency()));
