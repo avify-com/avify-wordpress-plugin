@@ -17,7 +17,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 $entry = json_encode($entry);
             }
             // Write the log file.
-            $file = $upload_dir . '/wc-logs/' . $file . '.log';
+            $file = $upload_dir . '/wc-logs/' . $file . date("Y-m-d") . '.log';
             $file = fopen($file, $mode);
             $bytes = fwrite($file, current_time('mysql') . " : " . $entry . "\n");
             fclose($file);
@@ -25,7 +25,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
         }
     }
 
-    if (!function_exists('avify_quote')) {
+    if (!function_exists('create_avify_quote')) {
         function create_avify_quote($AVIFY_URL, $AVIFY_SHOP_ID)
         {
             avify_log('create_avify_quote...');
@@ -66,8 +66,7 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 public function __construct($instance_id = 0)
                 {
                     parent::__construct($instance_id);
-
-                    $this->id = 'avfdeliveries'; // Id for your shipping method. Should be unique.
+                    $this->id = 'avfdeliveries'; // ID for your shipping method. Should be unique.
                     $this->instance_id = absint($instance_id);
                     $this->title = __('Avify Deliveries');  // Title shown in admin
                     $this->method_title = __('Avify Deliveries');  // Title shown in admin
@@ -108,150 +107,22 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                 public function calculate_shipping($package = array())
                 {
                     $isCheckout = (is_checkout() || is_cart());
-                    if ($isCheckout && !WC()->session->get('avify_lock')) {
-                        WC()->session->set('avify_lock', true);
+                    if ($isCheckout) {
                         avify_log('---------------------------------------------------');
-
                         $AVIFY_URL = $this->get_option('avify_url');
                         $AVIFY_SHOP_ID = $this->get_option('avify_shop_id');
-
-                        $carUUID = WC()->session->get('avify_cart_uuid');
-                        if(is_null($carUUID)) {
-                            $carUUID = uniqid();
-                            WC()->session->set('avify_cart_uuid', $carUUID);
+                        $sessionUUID = WC()->session->get('avify_session_uuid');
+                        if(is_null($sessionUUID)) {
+                            $sessionUUID = uniqid();
+                            WC()->session->set('avify_session_uuid', $sessionUUID);
                         }
-                        $wooCartKey = $carUUID;
-                        if (!$wooCartKey) return null;
-
-                        avify_log('get avify shipping rates woo cart: ' . $wooCartKey);
-
-                        /** Cart Sync **/
-                        //Get from session
-                        $avifyQuoteId = WC()->session->get('avify_quote_' . $wooCartKey);
-                        if (!$avifyQuoteId) {
-                            $avifyQuoteId = create_avify_quote($AVIFY_URL, $AVIFY_SHOP_ID);
-                        } else {
-                            avify_log('validate -> ' . $avifyQuoteId);
-                            if($avifyQuoteId == 'loading') {
-                                WC()->session->set('avify_quote_' . $wooCartKey, null);
-                                return;
-                            }
-                            //Still valid?
-                            $responseHeaders = [];
-                            $avifyCookie = WC()->session->get('avify_quote_cookie_' . $wooCartKey);
-                            $avifyQuoteId = explode(':', $avifyQuoteId)[0];
-                            $avifyQuote = Curl::get($AVIFY_URL . "/rest/V1/guest-carts/{$avifyQuoteId}", [
-                                "Cookie: $avifyCookie"
-                            ], $responseHeaders);
-                            if (!$avifyQuote['success']) {
-                                $avifyQuoteId = create_avify_quote($AVIFY_URL, $AVIFY_SHOP_ID);
-                            } else {
-                                if(isset($responseHeaders['set-cookie'][0])) {
-                                    WC()->session->set('avify_quote_cookie_' . $wooCartKey, $responseHeaders['set-cookie'][0]);
-                                }
-                            }
-                        }
-                        $avifyCookie = WC()->session->get('avify_quote_cookie_' . $wooCartKey);
-                        WC()->session->set('avify_lock', false);
-                        avify_log('avify quote id : ' . $avifyQuoteId);
-                        avify_log("avify cookie: $avifyCookie");
-
-                        //Local avify cart
+                        $avifyCookie = WC()->session->get('avify_cookie_' . $sessionUUID);
                         $cart = WC()->cart;
-                        $avifyLocalQuote = WC()->session->get('avify_local_quote_' . $wooCartKey);
-                        if ($avifyLocalQuote) {
-                            $avifyLocalQuote = json_decode($avifyLocalQuote, true);
-                        } else {
-                            $avifyLocalQuote = [];
-                        }
 
-                        //Update items
-                        foreach ($cart->get_cart() as $item) {
-                            $sku = $item['data']->get_meta( 'avify_sku', true );
-                            $update = false;
-                            $add = false;
-                            if (!isset($avifyLocalQuote[$sku])) {
-                                $add = true;
-                                avify_log("add item:{$sku}");
-                            } else {
-                                $avfLocalItem = explode(':', $avifyLocalQuote[$sku]);
-                                if (floatval($avfLocalItem[1]) != floatval($item['quantity'])) {
-                                    $update = true;
-                                    avify_log("update item {$avfLocalItem[0]}:{$sku}");
-                                }
-                            }
-
-                            if ($update || $add) {
-                                $url = $AVIFY_URL . "/rest/V1/guest-carts/{$avifyQuoteId}/items";
-                                $headers = [
-                                    "Cookie: $avifyCookie",
-                                    'Content-Type: application/json'
-                                ];
-                                $payload = json_encode([
-                                    "cartItem" => [
-                                        "sku" => $sku,
-                                        "qty" => $item['quantity']
-                                    ]
-                                ]);
-
-                                $avifyItem = null;
-                                if ($add) {
-                                    $avifyItem = Curl::post(
-                                        $url, $headers, $payload
-                                    );
-                                } else {
-                                    if (isset($avfLocalItem[0]) && $update) {
-                                        $avifyItem = Curl::put(
-                                            $url . "/{$avfLocalItem[0]}", $headers, $payload
-                                        );
-                                    }
-                                }
-                                if ($avifyItem) {
-                                    avify_log($avifyItem);
-                                    if ($avifyItem['success']) {
-                                        $avifyLocalQuote[$sku] = $avifyItem['data']['item_id'] . ':' . $item['quantity'];
-                                    } else {
-                                        if(isset($avifyItem['httpCode'])) {
-                                            if($avifyItem['httpCode'] == 404) {
-                                                //Clear
-                                                WC()->session->set('avify_quote_' . $wooCartKey, NULL);
-                                                WC()->session->set('avify_shop_' . $wooCartKey, NULL);
-                                                WC()->session->set('avify_local_quote_' . $wooCartKey, NULL);
-                                                WC()->session->set('avify_cart_uuid', NULL);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        //Delete items
-                        foreach ($avifyLocalQuote as $avfSku => $avfLocalItem) {
-                            $found = false;
-                            foreach ($cart->get_cart() as $item) {
-                                $sku = $item['data']->get_meta( 'avify_sku', true );
-                                if ($sku == $avfSku) {
-                                    $found = true;
-                                }
-                            }
-                            if (!$found) {
-                                $avfLocalItem = explode(':', $avfLocalItem);
-                                avify_log("delete item {$avfLocalItem[0]}:{$avfSku}");
-                                Curl::delete($AVIFY_URL . "/rest/V1/guest-carts/{$avifyQuoteId}/items/{$avfLocalItem[0]}",
-                                    [
-                                        "Cookie: $avifyCookie"
-                                    ]
-                                );
-                                unset($avifyLocalQuote[$avfSku]);
-                            }
-                        }
-                        WC()->session->set('avify_local_quote_' . $wooCartKey, json_encode($avifyLocalQuote));
-
-                        /** Rates **/
                         if (!isset($package['destination'])) {
                             return;
                         }
 
-                        //Coords
                         $latitude = isset($_POST['lpac_latitude']) ? sanitize_text_field($_POST['lpac_latitude']) : 0.00;
                         $longitude = isset($_POST['lpac_longitude']) ? sanitize_text_field($_POST['lpac_longitude']) : 0.00;
                         $fields = isset($_POST['post_data']) ? sanitize_text_field($_POST['post_data']) : null;
@@ -271,39 +142,33 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         }
 
                         $address = $package['destination'];
+                        $responseHeaders = [];
                         $avifyRates = Curl::post(
-                            $AVIFY_URL . "/rest/V1/guest-carts/{$avifyQuoteId}/estimate-shipping-methods",
+                            $AVIFY_URL . "/rest/V1/avify/wordpress/hook/shipping/{$AVIFY_SHOP_ID}",
                             [
-                                "Cookie: $avifyCookie",
+                                "Cookie: " . $avifyCookie ?: "",
                                 'Content-Type: application/json'
                             ],
                             json_encode([
-                                "address" => [
-                                    "city" => $address['city'],
-                                    "country_id" => $address['country'],
-                                    "postcode" => $address['postcode'],
-                                    "region" => $address['state'],
-                                    "street" => [$address['address_1'], $address['address_2']],
-                                    "custom_attributes" => [
-                                        "latitude" => $latitude,
-                                        "longitude" => $longitude
-                                    ],
-                                    "telephone" => "",
-                                    "extension_attributes" => [],
-                                    "firstname" => "",
-                                    "lastname" => "",
-                                    "middlename" => "",
-                                    "region_code" => "",
-                                    "region_id" => 0
-                                ]
-                            ])
+                                "items" => $cart->get_cart(),
+                                "country_id" => $address['country'],
+                                "postcode" => $address['postcode'],
+                                //"currency" => get_woocommerce_currency(),
+                                "weight" => wc_get_weight( $cart->get_cart_contents_weight(), 'g' ),
+                                "latitude" => $latitude,
+                                "longitude" => $longitude
+                            ]), $responseHeaders
                         );
-
+                        avify_log(json_encode($avifyRates));
                         if (!isset($avifyRates['data'])) {
-                            avify_log('No rates found on avify...');
+                            avify_log('no rates found on avify.');
                             avify_log($avifyRates);
                             return;
                         }
+                        if(isset($responseHeaders['set-cookie'][0])) {
+                            WC()->session->set('avify_cookie_' . $sessionUUID, $responseHeaders['set-cookie'][0]);
+                        }
+
                         $rates = [];
                         foreach ($avifyRates['data'] as $avifyRate) {
                             if ($avifyRate['available']) {
@@ -321,16 +186,10 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                                 ];
                             }
                         }
-                        //shuffle($rates);
+
                         foreach ($rates as $rate) {
                             $this->add_rate($rate);
                         }
-                    } else {
-                        avify_log(WC()->session->get('avify_lock') ? 'locked...' : 'no-locked...');
-                    }
-
-                    if (!$isCheckout) {
-                        WC()->session->set('avify_lock', false);
                     }
                 }
 
@@ -350,15 +209,15 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                         'avify_shop_id' => array(
                             'title' => __('Avify Shop ID', 'woocommerce'),
                             'type' => 'text',
-                            'description' => __('Avify shop unique identifier.', 'woocommerce'),
+                            'description' => __('Avify Shop UUID', 'woocommerce'),
                             'default' => null,
                             'desc_tip' => true
                         ),
                         'avify_url' => array(
                             'title' => __('Avify URL', 'woocommerce'),
                             'type' => 'text',
-                            'description' => __('Avify Base URL.', 'woocommerce'),
-                            'default' => __('https://shop.avify.com', 'woocommerce'),
+                            'description' => __('Avify Base URL', 'woocommerce'),
+                            'default' => '',
                             'desc_tip' => true
                         )
                     );

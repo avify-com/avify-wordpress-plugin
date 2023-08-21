@@ -5,9 +5,9 @@ msgstr ""
 "Project-Id-Version: Avify WordPress Plugin Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
 "POT-Creation-Date: 2022-04-04 10:10-0600\n"
-"PO-Revision-Date: \n"
+"PO-Revision-Date: 2023-03-21 01:54+0000\n"
 "Last-Translator: \n"
-"Language-Team: Your Team <translations@example.com>\n"
+"Language-Team: Español de Costa Rica\n"
 "Language: es_CR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,10 +16,10 @@ msgstr ""
 "X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
-"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:"
+"1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: readme.txt\n"
 "X-Poedit-SearchPathExcluded-1: languages\n"
@@ -27,10 +27,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-3: vendor\n"
 "X-Poedit-SearchPathExcluded-4: composer.json\n"
 "X-Poedit-SearchPathExcluded-5: composer.lock\n"
-
-#: avify-payments-gateway.php:9
-msgid "Avify"
-msgstr ""
+"X-Loco-Version: 2.6.4; wp-6.1.1"
 
 #: avify-payments-gateway.php:11
 msgid ""
@@ -125,7 +122,7 @@ msgstr "Identificador único de tu tienda"
 
 #: avify-payments-gateway.php:95
 msgid "Client Secret"
-msgstr ""
+msgstr "Secreto"
 
 #: avify-payments-gateway.php:97
 msgid "API Client Secret provided by Avify"
@@ -166,7 +163,7 @@ msgstr "Código de verificación"
 
 #: avify-payments-gateway.php:312
 msgid "CVC"
-msgstr ""
+msgstr "CVS"
 
 #: avify-payments-gateway.php:317
 msgid "Card holder"
@@ -184,56 +181,55 @@ msgstr "Fecha de expiración"
 msgid "MM / YY"
 msgstr "MM/AA"
 
-#: avify-payments-initializer.php:41
-#, fuzzy, php-format
-#| msgid ""
-#| "Your Avify installation failed. You need to install <a href=\"%1$s\" "
-#| "target=\"_blank\" rel=\"noopener noreferrer\">WooCommerce</a> in order to "
-#| "run Avify."
+#: avify-wordpress-initializer.php:41
 msgid ""
-"Your Avify installation failed. You need to install <a href=\"%1$s\" target="
-"\"_blank\" rel=\"noopener noreferrer\">WooCommerce</a> in order to run Avify."
+"Your Avify installation failed. You need to install WooCommerce in order to "
+"run Avify."
 msgstr ""
-"Error en la instalación de Avify. Debe instalar <a href=\"%1$s\" target="
-"\"_blank\" rel=\"noopener noreferrer\">WooCommerce</a> para ejecutar Avify."
+"Error en la instalación de Avify. Debe instalar WooCommerce para ejecutar "
+"Avify."
 
-#: avify-payments-initializer.php:84
+#: avify-wordpress-initializer.php:84
 msgid "Settings"
 msgstr "Ajustes"
 
-#: avify-payments-shipping.php:65 avify-payments-shipping.php:66
-#: avify-payments-shipping.php:318
+#: avify-shipping.php:65 avify-shipping.php:66 avify-shipping.php:318
 msgid "Avify Deliveries"
-msgstr ""
+msgstr "Envíos Avify"
 
-#: avify-payments-shipping.php:67
+#: avify-shipping.php:67
 msgid "All deliveries in one plugin"
-msgstr ""
+msgstr "Todos los envíos en un solo plugin"
 
-#: avify-payments-shipping.php:315
+#: avify-shipping.php:315
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
-#: avify-payments-shipping.php:317
+#: avify-shipping.php:317
 msgid "This controls the title which the user sees during checkout."
-msgstr ""
+msgstr "Esto controla el título que el usuario verá en la página de pago."
 
-#: avify-payments-shipping.php:322
+#: avify-shipping.php:322
 msgid "Avify Shop ID"
-msgstr ""
+msgstr "ID de Tienda"
 
-#: avify-payments-shipping.php:324
-msgid "Avify shop unique identifier."
-msgstr ""
-
-#: avify-payments-shipping.php:329
+#: avify-shipping.php:329
 msgid "Avify URL"
-msgstr ""
+msgstr "URL de Avify"
 
-#: avify-payments-shipping.php:331
-msgid "Avify Base URL."
-msgstr ""
+#: avify-shipping.php:331
+msgid "Avify Base URL"
+msgstr "URL Base de Avify"
 
-#: avify-payments-shipping.php:332
-msgid "https://shop.avify.com"
-msgstr ""
+#: avify-custom-options.php:48
+msgid "Max Width"
+msgstr "Anchura Máxima"
+
+msgid "Max Height"
+msgstr "Altura Máxima"
+
+msgid "Allowed Extensions"
+msgstr "Extensiones Permitidas"
+
+msgid "Max Characters"
+msgstr "Caracteres Máximos"

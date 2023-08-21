@@ -1,12 +1,20 @@
 {
-    "name": "avify/avify-payments",
-    "require": {
-        "avify/avify-php-client": "^1.0"
+  "name": "avify/avify-wordpress",
+  "require": {
+    "avify/avify-php-client": "^1.0"
+  },
+  "authors": [
+    {
+      "name": "Juan Escobar",
+      "email": "juan@avify.com"
     },
-    "authors": [
-        {
-            "name": "Juan Escobar",
-            "email": "juan@avify.com"
-        }
-    ]
+    {
+      "name": "Pablo Gutiérrez",
+      "email": "pablo@avify.com"
+    },
+    {
+      "name": "Alexis Valenciano",
+      "email": "alexis@avify.com"
+    }
+  ]
 }

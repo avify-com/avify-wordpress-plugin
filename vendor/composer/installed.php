@@ -6,11 +6,11 @@
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'reference' => '270a340bfd0e5f2e122b480c069f893950b6a08c',
-        'name' => 'avify/avify-payments',
+        'name' => 'avify/avify-wordpress',
         'dev' => true,
     ),
     'versions' => array(
-        'avify/avify-payments' => array(
+        'avify/avify-wordpress' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
             'type' => 'library',

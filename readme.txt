@@ -2,8 +2,8 @@
 Contributors: juanescobar06, tubipapilla, jupagar77
 Tags: avify, checkout, orders, payment gateway, woocommerce
 Requires at least: 5.6
-Tested up to: 5.9.2
-Stable tag: 1.0.1
+Tested up to: 6.1.1
+Stable tag: 1.1.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -30,7 +30,7 @@ Process payments and display prices in USD, CRC, MXN.
 * Customer data and card encryption.
 * Processing of payments in USD or CRC.
 * Sandbox testing.
-* Sincronize orders
+* Synchronize orders
 
 Do you want to know more about Avify? Please visit our [website](https://avify.com/) and find out what we can do.
 
@@ -57,9 +57,50 @@ When you sign up for a monthly subscription, our customer success department wil
 * To connect the orders enable in the avify dashboard Integrations > Woocommerce
 == Changelog ==
 
+### 1.1.1
+
+* Remove cache shipping.
+
++ 1.1.0 +
+
+* Fix configurable products custom option pricing.
+
+= 1.0.9 =
+
+* Add max width and height for image custom option.
+* Add missing spanish translations.
+
+= 1.0.8 =
+
+* Add support to Avify custom options.
+
+= 1.0.7 =
+
+* Fix locked bug.
+
+= 1.0.6 =
+
+* Upgrade tested up to.
+
+= 1.0.5 =
+
+* Fix package bug.
+
+= 1.0.4 =
+
+* Improve Avify rates collect.
+
+= 1.0.3 =
+
+* Remove avify url as default value.
+
+= 1.0.2 =
+
+* Fixed bug when updating status of failed orders.
+
 = 1.0.1 =
 
-* Fix minor bug with localization.
+* Fixed minor bug with localization.
 
 = 1.0.0 =
 
