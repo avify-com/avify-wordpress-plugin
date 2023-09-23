@@ -1,0 +1,116 @@
+$openSans: 'Open Sans', sans-serif;
+
+.avf_form {
+  position: relative;
+}
+.avf_form-row {
+  position: relative;
+
+  &:not(:nth-child(1)) {
+    margin-top: 12px;
+  }
+}
+.avf_form-row.avf_form-row-1-of-2 {
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% + 5px + 5px);
+  left: -5px;
+
+  .avf_form-input {
+    width: calc(50% - 5px - 5px);
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}
+.avf_form-row-with-button {
+  text-align: center;
+  &:not(:nth-child(1)) {
+    margin-top: 24px;
+  }
+}
+.avf_form-input {
+  position: relative;
+
+  input {
+    background: none;
+    outline: none;
+    display: block;
+    width: 100%;
+    height: 45px;
+    caret-color: var(--color-black);
+    font-family: $openSans;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: initial;
+    color: var(--color-grey);
+    border: 1px solid #E2E2E2;
+    border-radius: 8px;
+    padding: 13px 8px 13px 8px;
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  textarea {
+    font-family: $openSans;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: initial;
+    border-radius: 8px;
+    outline: none;
+    display: block;
+    width: 100%;
+    caret-color: var(--color-black);
+    resize: none;
+    color: var(--color-grey);
+    background: none;
+    border: 1px solid #E2E2E2;
+    padding: 13px 8px 13px 8px;
+    height: 92px;
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  select {
+    font-family: $openSans;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: initial;
+    color: var(--color-grey);
+    background: none;
+    border: 1px solid #E2E2E2;
+    border-radius: 8px;
+    outline: none;
+    display: block;
+    width: 100%;
+    padding: 13px 8px 13px 8px;
+    caret-color: var(--color-black);
+  }
+}
+.avf_form-input-inner {
+  position: relative;
+}
+.avf_form.type-search {
+  .avf_form-input.type-button {
+    width: 16px;
+    height: 16px;
+    margin: auto 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 21px;
+  }
+}
+.avf_form-input-label {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--color-grey-2);
+
+  span {
+    color: var(--color-red);
+  }
+}
