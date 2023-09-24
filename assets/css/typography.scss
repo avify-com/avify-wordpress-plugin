@@ -17,6 +17,10 @@
 	font-weight: 700;
 	line-height: 27px;
 	color: var(--color-black);
+	@media (max-width: 768px) {
+		font-size: 18px;
+		line-height: 20px;
+	}
 }
 
 .avf_txt.type-3 {
@@ -24,6 +28,10 @@
 	font-weight: 700;
 	line-height: 100%;
 	color: var(--color-black);
+	@media (max-width: 768px) {
+		font-size: 20px;
+		line-height: 80%;
+	}
 }
 
 .avf_txt.type-4 {
@@ -83,6 +91,10 @@
 	font-weight: 600;
 	line-height: 25px;
 	color: var(--color-grey-3);
+	@media (max-width: 768px) {
+		font-size: 16px;
+		line-height: 20px;
+	}
 }
 
 .avf_txt.type-12 {

@@ -58,6 +58,7 @@ export default class Checkout {
         self.avfShippingLoader = $("#avf_shipping_methods_loader");
         self.avfShippingMethodsHTML = $("#avf_shipping_methods .step-content-shipping-var-item").addClass("avf-new-method").parent().html()
         //--
+        self.avfOpenSummary = $("#avf-open-order-summary");
         self.avfPlaceOrder = $("#avf_checkout_button");
         self.avfCheckoutLoader = $(".avf-checkout-loader");
 
@@ -106,6 +107,69 @@ export default class Checkout {
         }
 
         self.body.css('opacity', '1');
+    }
+
+    placeOrder() {
+        const self = this;
+        self.avfPlaceOrder.addClass("var-disabled");
+        self.avfCheckoutLoader.addClass("show");
+        if (self.avfIsPickUp || avfIsVirtual) {
+            // autocomplete
+            // -- country
+            setTimeout(function () {
+                if (self.wooBillingCountry.is("select") && !self.wooBillingCountry.val()) {
+                    self.wooBillingCountry.val(self.wooBillingCountry.find("option").eq(1).val());
+                    self.wooBillingCountry.trigger("change");
+                }
+
+                if (self.wooShippingCountry.is("select") && !self.wooShippingCountry.val()) {
+                    self.wooShippingCountry.val(self.wooShippingCountry.find("option").eq(1).val());
+                    self.wooShippingCountry.trigger("change");
+                }
+            }, 100);
+            // -- state
+            setTimeout(function () {
+                if (self.wooBillingState.is("select") && !self.wooBillingState.val()) {
+                    self.wooBillingState.val(self.wooBillingState.find("option").eq(1).val());
+                    self.wooBillingState.trigger("propertychange");
+                }
+
+                if (self.wooShippingState.is("select") && !self.wooShippingState.val()) {
+                    self.wooShippingState.val(self.wooShippingState.find("option").eq(1).val());
+                    self.wooShippingState.trigger("change");
+                }
+            }, 200);
+            // -- city
+            setTimeout(function () {
+                if (self.wooBillingCity.is("select") && !self.wooBillingCity.val()) {
+                    self.wooBillingCity.val(self.wooBillingCity.find("option").eq(1).val());
+                    self.wooBillingCity.trigger("change");
+                }
+
+                if (self.wooShippingCity.is("select") && !self.wooShippingCity.val()) {
+                    self.wooShippingCity.val(self.wooShippingCity.find("option").eq(1).val());
+                    self.wooShippingCity.trigger("change");
+                }
+            }, 300);
+            // -- all
+            setTimeout(function () {
+                [
+                    self.wooBillingCountry, self.wooShippingCountry,
+                    self.wooBillingState, self.wooShippingState,
+                    self.wooBillingCity, self.wooShippingCity,
+                    self.wooBillingZip, self.wooShippingZip,
+                    self.wooBillingAddress1, self.wooShippingAddress1
+                ].map(input => {
+                    if (!input.val()) {
+                        input.val("N/A");
+                    }
+                });
+            }, 400);
+        }
+        setTimeout(function () {
+            $("#place_order").click();
+            self.relocatePayments();
+        }, 500);
     }
 
     // --
@@ -169,7 +233,7 @@ export default class Checkout {
             } else {
                 if (self.areInputsNotEmpty([
                     self.avfBillingCountry, self.avfBillingState, self.avfBillingCity,
-                    self.avfBillingDistrict, self.avfBillingZip, self.avfBillingAddress
+                    self.avfBillingZip, self.avfBillingAddress
                 ])) {
                     if (!method.val().startsWith('avfdeliveries-instorepickup')) {
                         self.avfThirdStep.removeClass("var-disabled");
@@ -328,7 +392,8 @@ export default class Checkout {
     switchCityHTMLType() {
         const self = this,
             id = self.avfBillingCity.attr("id");
-        if (self.wooShippingCity.parent().find("select")[0]) {
+        self.wooShippingCity = $("#shipping_city");
+        if (self.wooShippingCity.parent().find("select").length) {
             self.avfBillingCity.replaceWith('<select id="' + id + '">');
         } else {
             self.avfBillingCity.replaceWith('<input id="' + id + '">');
@@ -346,7 +411,8 @@ export default class Checkout {
     switchDifCityHTMLType() {
         const self = this,
             id = self.avfDifBillingCity.attr("id");
-        if (self.wooBillingCity.parent().find("select")[0]) {
+        self.wooBillingCity = $("#billing_city");
+        if (self.wooBillingCity.parent().find("select").length) {
             self.avfDifBillingCity.replaceWith('<select id="' + id + '">');
         } else {
             self.avfDifBillingCity.replaceWith('<input id="' + id + '">');
@@ -418,6 +484,7 @@ export default class Checkout {
                 $(this).removeClass("completed active");
                 $(this).addClass("active");
                 self.currentStep = stepContent.attr('data-step');
+                window.scrollTo({top: 0, behavior: 'smooth'});
                 self.executeObserve();
             }
         });
@@ -450,13 +517,18 @@ export default class Checkout {
         });
 
         // clicks
+        self.avfOpenSummary.on("click", function () {
+            $(this).parent().toggleClass('open');
+        });
         self.avfSecondStep.on("click", function () {
             stepContent.removeClass("active");
             stepContent.eq(1).addClass("active");
             stepTab.eq(0).addClass("completed");
             stepTab.eq(1).addClass("active");
             self.currentStep = stepContent.eq(1).attr('data-step');
+            window.scrollTo({top: 0, behavior: 'smooth'});
             self.executeObserve();
+            self.switchCityHTMLType();
         });
         self.checkIfCanOpenSecondStep();
     }
@@ -502,7 +574,11 @@ export default class Checkout {
         const avfShippingMapOrig = $("#lpac-map-container");
         if (avfShippingMapOrig.length) {
             const avfShippingMapPlace = $(".step-content-map-container");
-            avfShippingMapPlace.append(avfShippingMapOrig);
+            if (avfShippingMapPlace.length) {
+                avfShippingMapPlace.append(avfShippingMapOrig);
+            } else {
+                avfShippingMapOrig.remove();
+            }
         } else {
             $(".step-content-map").hide();
         }
@@ -573,6 +649,7 @@ export default class Checkout {
             stepTab.eq(1).addClass("completed");
             stepTab.eq(2).addClass("active");
             self.currentStep = stepContent.eq(2).attr('data-step')
+            window.scrollTo({top: 0, behavior: 'smooth'});
             self.executeObserve();
         });
         self.avfShippingLoader.hide();
@@ -665,73 +742,7 @@ export default class Checkout {
         }
 
         self.avfPlaceOrder.on("click", function () {
-            if (self.avfIsPickUp) {
-                // autocomplete
-                setTimeout(function () {
-                    if (self.wooBillingCountry.is("select") && !self.wooBillingCountry.val()) {
-                        self.wooBillingCountry.val(self.wooBillingCountry.find("option").eq(1).val());
-                        self.wooBillingCountry.trigger("change");
-                    }
-                    if (self.wooShippingCountry.is("select") && !self.wooShippingCountry.val()) {
-                        self.wooShippingCountry.val(self.wooShippingCountry.find("option").eq(1).val());
-                        self.wooShippingCountry.trigger("change");
-                    }
-                }, 100);
-                setTimeout(function () {
-                    if (self.avfBillingState.is("select") && !self.avfBillingState.val()) {
-                        self.avfBillingState.val(self.avfBillingState.find("option").eq(1).val());
-                        self.avfBillingState.trigger("propertychange");
-                    }
-                    if (self.wooShippingState.is("select") && !self.wooShippingState.val()) {
-                        self.wooShippingState.val(self.wooShippingState.find("option").eq(1).val());
-                        self.wooShippingState.trigger("change");
-                    }
-                }, 200);
-                setTimeout(function () {
-                    if (self.wooBillingCity.is("select") && !self.wooBillingCity.val()) {
-                        self.wooBillingCity.val(self.wooBillingCity.find("option").eq(1).val());
-                        self.wooBillingCity.trigger("change");
-                    }
-                    if (self.wooShippingCity.is("select") && !self.wooShippingCity.val()) {
-                        self.wooShippingCity.val(self.wooShippingCity.find("option").eq(1).val());
-                        self.wooShippingCity.trigger("change");
-                    }
-                }, 300);
-                setTimeout(function () {
-                    if (!self.wooBillingCountry.val())
-                        self.wooBillingCountry.val("N/A");
-                    if (!self.wooShippingCountry.val())
-                        self.wooShippingCountry.val("N/A");
-
-                    if (!self.avfBillingState.val())
-                        self.avfBillingState.val("N/A");
-                    if (!self.wooShippingState.val())
-                        self.wooShippingState.val("N/A");
-
-                    if (!self.wooBillingCity.val())
-                        self.wooBillingCity.val("N/A");
-                    if (!self.wooShippingCity.val())
-                        self.wooShippingCity.val("N/A");
-
-                    if (!self.wooBillingZip.val())
-                        self.wooBillingZip.val("N/A");
-                    if (!self.wooShippingZip.val())
-                        self.wooShippingZip.val("N/A");
-
-                    if (!self.wooBillingAddress1.val())
-                        self.wooBillingAddress1.val("N/A");
-                    if (!self.wooShippingAddress1.val())
-                        self.wooShippingAddress1.val("N/A");
-                }, 400);
-            }
-
-            self.avfCheckoutLoader.addClass("show");
-            setTimeout(function () {
-                $("#place_order").click();
-            }, 500);
-            setTimeout(function () {
-                self.avfCheckoutLoader.removeClass("show");
-            }, 5000);
+            self.placeOrder();
         });
     }
 
@@ -969,20 +980,20 @@ export default class Checkout {
     initObserve() {
         const self = this;
 
-        this.body.on("init_checkout", function () {
-            console.log('init_checkout');
-        });
         this.body.on("checkout_error", function () {
-            console.log('checkout_error');
+            if (self.currentStep === 'payment') {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+                self.avfCheckoutLoader.removeClass("show");
+                self.avfPlaceOrder.removeClass("var-disabled");
+            }
         });
         this.body.on("update_checkout", function () {
-            console.log('update_checkout');
             self.avfCheckoutLoader.addClass("show");
         });
         this.body.on("updated_checkout", function () {
-            console.log('updated_checkout');
-            self.executeObserve();
             self.avfCheckoutLoader.removeClass("show");
+            self.avfPlaceOrder.removeClass("var-disabled");
+            self.executeObserve();
             if (self.avfShippingMapClicked) {
                 self.avfShippingMapClicked = false;
                 if (self.differentBillingAddress) {
@@ -1000,21 +1011,13 @@ export default class Checkout {
                     self.avfBillingAddress.val(self.wooBillingAddress1.val());
                     self.avfBillingZip.val(self.wooBillingZip.val());
                 }
+                window.scrollTo({top: 0, behavior: 'smooth'});
             }
         });
-
         this.body.on("payment_method_selected", function () {
-            console.log('payment_method_selected');
             setTimeout(() => {
                 self.relocatePayments();
             }, 200);
-        });
-
-        this.body.on("applied_coupon_in_checkout", function () {
-            console.log('applied_coupon_in_checkout');
-        });
-        this.body.on("removed_coupon_in_checkout", function () {
-            console.log('removed_coupon_in_checkout');
         });
 
         ['scroll', 'resize'].map((event) => {

@@ -167,7 +167,9 @@ function add_cart_item_data($cart_item_data, $product_id)
             $id = explode('-', $id);
             if ($avfCustomOpt['option_id'] == $id[0]) {
                 $found = true;
-                $valueFound = $value;
+                if (empty($valueFound)) {
+                    $valueFound = $value;
+                }
             }
         }
 

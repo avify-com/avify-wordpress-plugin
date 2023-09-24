@@ -86,7 +86,7 @@ add_action('plugins_loaded', 'init_avify', 0);
 function avify_payments_action_links($links)
 {
     $plugin_links = array(
-        '<a href="' . admin_url('admin.php?page=wc-settings&tab=checkout') . '">' . __('Settings', 'avify-wordpress') . '</a>',
+        '<a href="' . admin_url('admin.php?page=avify-settings') . '">' . __('Settings', 'avify-wordpress') . '</a>',
     );
     return array_merge($plugin_links, $links);
 }

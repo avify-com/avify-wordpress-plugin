@@ -20,6 +20,8 @@ $svgAttach = '<div class="yv-file-uploder-image">
                     <path d="M40.875 0.75H7.125C5.33539 0.751954 3.61963 1.46374 2.35419 2.72919C1.08874 3.99464 0.376954 5.71039 0.375 7.5V34.5C0.376954 36.2896 1.08874 38.0054 2.35419 39.2708C3.61963 40.5363 5.33539 41.248 7.125 41.25H40.875C42.6646 41.248 44.3804 40.5363 45.6458 39.2708C46.9113 38.0054 47.623 36.2896 47.625 34.5V7.5C47.623 5.71039 46.9113 3.99464 45.6458 2.72919C44.3804 1.46374 42.6646 0.751954 40.875 0.75ZM32.4375 7.5C33.4388 7.5 34.4175 7.79691 35.2501 8.35319C36.0826 8.90946 36.7315 9.70011 37.1146 10.6252C37.4978 11.5502 37.5981 12.5681 37.4027 13.5501C37.2074 14.5322 36.7252 15.4342 36.0172 16.1422C35.3092 16.8502 34.4072 17.3324 33.4251 17.5277C32.4431 17.7231 31.4252 17.6228 30.5002 17.2396C29.5751 16.8565 28.7845 16.2076 28.2282 15.3751C27.6719 14.5426 27.375 13.5638 27.375 12.5625C27.3764 11.2203 27.9102 9.93341 28.8593 8.98431C29.8084 8.03521 31.0953 7.5014 32.4375 7.5ZM7.125 37.875C6.22989 37.875 5.37145 37.5194 4.73851 36.8865C4.10558 36.2535 3.75 35.3951 3.75 34.5V27.3671L13.7527 18.4761C14.7177 17.6202 15.9729 17.1644 17.2623 17.2017C18.5517 17.2389 19.7784 17.7663 20.6925 18.6765L27.5427 25.512L15.1796 37.875H7.125ZM44.25 34.5C44.25 35.3951 43.8944 36.2535 43.2615 36.8865C42.6285 37.5194 41.7701 37.875 40.875 37.875H19.9532L32.7592 25.069C33.6659 24.2979 34.8164 23.8731 36.0066 23.8701C37.1968 23.867 38.3496 24.2858 39.2603 25.0521L44.25 29.2097V34.5Z" fill="#00543B"/>
                 </svg>
               </div>';
+
+$cart = WC()->cart;
 ?>
 
 <div>
@@ -53,7 +55,7 @@ $svgAttach = '<div class="yv-file-uploder-image">
                     </div>
                 </div>
 
-                <?php if(WC()->cart->needs_shipping()): ?>
+                <?php if(!$cart->get_cart() || $cart->needs_shipping()): ?>
                     <div class="step-item">
                         <?= $svgCheck ?>
 
@@ -232,7 +234,7 @@ $svgAttach = '<div class="yv-file-uploder-image">
                                                         <div class="avf_form-input-label"
                                                              data-text="<?php _e('Cantón',  'avify-wordpress'); ?>"
                                                              data-mx-text="<?php _e('Ciudad',  'avify-wordpress'); ?>"
-                                                             data-cr-text="<?php _e('Cantón - Distrito',  'avify-wordpress'); ?>"
+                                                             data-cr-text="<?php _e('Cantón',  'avify-wordpress'); ?>"
                                                         >
                                                             <b><?php _e('Cantón',  'avify-wordpress'); ?></b> <span>*</span>
                                                         </div>
@@ -250,7 +252,7 @@ $svgAttach = '<div class="yv-file-uploder-image">
                                                              data-text="<?php _e('Distrito',  'avify-wordpress'); ?>"
                                                              data-mx-text="<?php _e('Colonia',  'avify-wordpress'); ?>"
                                                         >
-                                                            <b><?php _e('Distrito',  'avify-wordpress'); ?></b> <span>*</span>
+                                                            <b><?php _e('Distrito',  'avify-wordpress'); ?></b>
                                                         </div>
 
                                                         <div class="avf_form-input-inner">
@@ -456,7 +458,7 @@ $svgAttach = '<div class="yv-file-uploder-image">
                                                     <div class="avf_form-input-label"
                                                          data-text="<?php _e('Cantón',  'avify-wordpress'); ?>"
                                                          data-mx-text="<?php _e('Ciudad',  'avify-wordpress'); ?>"
-                                                         data-cr-text="<?php _e('Cantón - Distrito',  'avify-wordpress'); ?>"
+                                                         data-cr-text="<?php _e('Cantón',  'avify-wordpress'); ?>"
                                                     >
                                                         <b><?php _e('Cantón',  'avify-wordpress'); ?></b> <span>*</span>
                                                     </div>
@@ -474,7 +476,7 @@ $svgAttach = '<div class="yv-file-uploder-image">
                                                          data-text="<?php _e('Distrito',  'avify-wordpress'); ?>"
                                                          data-mx-text="<?php _e('Colonia',  'avify-wordpress'); ?>"
                                                     >
-                                                        <b><?php _e('Distrito',  'avify-wordpress'); ?></b> <span>*</span>
+                                                        <b><?php _e('Distrito',  'avify-wordpress'); ?></b>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
@@ -574,6 +576,11 @@ $svgAttach = '<div class="yv-file-uploder-image">
                 </div>
 
                 <div class="main-container-item">
+                    <button id="avf-open-order-summary">
+                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.00003 15.5C6.59557 15.5 6.23093 15.2564 6.07615 14.8827C5.92137 14.509 6.00692 14.0789 6.29292 13.7929L11.2929 8.79289C11.6834 8.40237 12.3166 8.40237 12.7071 8.79289L17.7071 13.7929C17.9931 14.0789 18.0787 14.509 17.9239 14.8827C17.7691 15.2564 17.4045 15.5 17 15.5H7.00003Z" fill="#000000"/>
+                        </svg>
+                    </button>
                     <div class="review-order">
                         <div class="review-order-title">
                             <div class="avf_txt type-4">
@@ -756,8 +763,8 @@ $svgAttach = '<div class="yv-file-uploder-image">
 
             <div class="el-text">
                 <div class="avf_txt type-12">
-                    <?php _e('Su orden ha sido tramitada de forma exitosa
-        						Hemos enviado un correo con la confirmación de su pedido',  'avify-wordpress'); ?>
+                    <?php _e('Su orden ha sido tramitada de forma exitosa.',  'avify-wordpress'); ?>
+                    <?php _e('Hemos enviado un correo con la confirmación de su pedido',  'avify-wordpress'); ?>
                     <span id="avf_order_number">#0000</span>
                 </div>
             </div>
