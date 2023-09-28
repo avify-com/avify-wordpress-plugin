@@ -57,19 +57,19 @@ When you sign up for a monthly subscription, our customer success department wil
 * To connect the orders enable in the avify dashboard Integrations > Woocommerce
 == Changelog ==
 
-= 1.1.3 =
+### 1.1.3
 
 * WordPress 6.3.1
 
-### 1.1.2
+= 1.1.2 =
 
 * Avify checkout.
 
-### 1.1.1
+= 1.1.1 =
 
 * Remove cache shipping.
 
-+ 1.1.0 +
+= 1.1.0 =
 
 * Fix configurable products custom option pricing.
 
