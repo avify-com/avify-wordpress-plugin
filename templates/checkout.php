@@ -90,7 +90,7 @@ $cart = WC()->cart;
 
                             <div class="step-content-live-divider"></div>
 
-                            <div class="step-content-persona-details-form">
+                            <div class="step-content-personal-details-form">
                                 <div class="avf_form">
                                     <div class="avf_form-row avf_form-row-1-of-2">
                                         <div class="avf_form-input">
