@@ -26,7 +26,7 @@ $cart = WC()->cart;
 
 <div>
     <script>
-        let avfIsVirtual = '<?= !WC()->cart->needs_shipping() ?>';
+        let avfIsVirtual = '<?= $cart && !$cart->needs_shipping() ?>';
         let avfAttachmentRequired = '<?= ($options['avify_attachment_required'] ?? '') === 'on' ?>';
         let avfShowElectronicInvoice = '<?= ($options['avify_show_electronic_invoice'] ?? '') === 'on' ?>';
     </script>
@@ -55,7 +55,7 @@ $cart = WC()->cart;
                     </div>
                 </div>
 
-                <?php if(!$cart->get_cart() || $cart->needs_shipping()): ?>
+                <?php if($cart && (!$cart->get_cart() || $cart->needs_shipping())): ?>
                     <div class="step-item">
                         <?= $svgCheck ?>
 
@@ -146,7 +146,7 @@ $cart = WC()->cart;
                                         <div class="avf_btn-frame"></div>
 
                                         <div class="avf_btn-text">
-                                            <?php if(WC()->cart->needs_shipping()): ?>
+                                            <?php if($cart && $cart->needs_shipping()): ?>
                                                 <?php _e('Continuar a envío',  'avify-wordpress'); ?>
                                             <?php else: ?>
                                                 <?php _e('Continuar a pago',  'avify-wordpress'); ?>
@@ -157,7 +157,7 @@ $cart = WC()->cart;
                             </div>
                         </div>
 
-                        <?php if(WC()->cart->needs_shipping()): ?>
+                        <?php if($cart && $cart->needs_shipping()): ?>
                             <div class="step-content" data-step="shipping">
                                 <div class="step-content-title">
                                     <div class="avf_txt type-3">
@@ -590,34 +590,36 @@ $cart = WC()->cart;
 
                         <div class="review-order-product-list">
                             <?php
-                            foreach (WC()->cart->get_cart() as $cart_item) {
-                                $product = $cart_item['data'];
-                                $quantity = $cart_item['quantity'];
+                            if ($cart) {
+                                foreach ($cart->get_cart() ?? [] as $cart_item) {
+                                    $product = $cart_item['data'];
+                                    $quantity = $cart_item['quantity'];
 
-                                if (!empty($product)) {
-                                    ?>
-                                    <div class="review-order-product-item flex middle space-between">
-                                        <div class="review-order-product-item-part flex middle">
-                                            <div class="review-order-product-item-image">
-                                                <?= $product->get_image(); ?>
+                                    if (!empty($product)) {
+                                        ?>
+                                        <div class="review-order-product-item flex middle space-between">
+                                            <div class="review-order-product-item-part flex middle">
+                                                <div class="review-order-product-item-image">
+                                                    <?= $product->get_image(); ?>
+                                                </div>
+
+                                                <div class="review-order-product-item-name">
+                                                    <div class="avf_txt type-9">
+                                                        <?= $product->get_name(); ?> x <?= $quantity; ?>
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            <div class="review-order-product-item-name">
+                                            <div class="review-order-product-item-price"
+                                                 data-item-quantity="<?= $quantity; ?>">
                                                 <div class="avf_txt type-9">
-                                                    <?= $product->get_name(); ?> x <?= $quantity; ?>
+                                                    <?= get_woocommerce_currency_symbol(); ?>
+                                                    <?= $product->get_price(); ?>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="review-order-product-item-price"
-                                             data-item-quantity="<?= $quantity; ?>">
-                                            <div class="avf_txt type-9">
-                                                <?= get_woocommerce_currency_symbol(); ?>
-                                                <?= $product->get_price(); ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php
+                                        <?php
+                                    }
                                 }
                             }
                             ?>
