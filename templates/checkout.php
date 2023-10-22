@@ -216,7 +216,7 @@ $cart = WC()->cart;
                                                     </div>
                                                 </div>
 
-                                                <div class="avf_form-row avf_form-row-1-of-2">
+                                                <div class="avf_form-row avf_form-row-1-of-2" id="avf_state_and_city_row">
                                                     <div class="avf_form-input">
                                                         <div class="avf_form-input-label"
                                                              data-text="<?php _e('Provincia',  'avify-wordpress'); ?>"
@@ -245,8 +245,7 @@ $cart = WC()->cart;
                                                     </div>
                                                 </div>
 
-                                                <div class="avf_form-row avf_form-row-1-of-2"
-                                                     id="avf_district_and_postal_row">
+                                                <div class="avf_form-row avf_form-row-1-of-2" id="avf_district_and_postal_row">
                                                     <div class="avf_form-input">
                                                         <div class="avf_form-input-label"
                                                              data-text="<?php _e('Distrito',  'avify-wordpress'); ?>"
@@ -372,13 +371,21 @@ $cart = WC()->cart;
                                     <?php _e('Método de pago',  'avify-wordpress'); ?>
                                 </div>
                             </div>
+
                             <div class="step-content-live-divider"></div>
+
                             <div class="step-content-payment-container-for-woo">
                                 <!-- here goes payments from woo -->
                             </div>
 
                             <div class="step-content-billing-address">
-                                <div class="step-content-avf-billing-summary">
+                                <div class="step-content-avf-address-summary">
+                                    <div class="avf_txt type-8">
+                                        <?php _e('Dirección de envío',  'avify-wordpress'); ?>
+                                    </div>
+                                    <div class="avf_txt type-6" id="avf_shipping_summary"></div>
+                                </div>
+                                <div class="step-content-avf-address-summary">
                                     <div class="avf_txt type-8">
                                         <?php _e('Dirección de facturación',  'avify-wordpress'); ?>
                                     </div>
@@ -438,7 +445,7 @@ $cart = WC()->cart;
                                                 </div>
                                             </div>
 
-                                            <div class="avf_form-row avf_form-row-1-of-2">
+                                            <div class="avf_form-row avf_form-row-1-of-2" id="avf_dif_state_and_city_row">
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label"
                                                          data-text="<?php _e('Provincia',  'avify-wordpress'); ?>"
@@ -469,8 +476,7 @@ $cart = WC()->cart;
                                                 </div>
                                             </div>
 
-                                            <div class="avf_form-row avf_form-row-1-of-2"
-                                                 id="avf_dif_district_and_postal_row">
+                                            <div class="avf_form-row avf_form-row-1-of-2" id="avf_dif_district_and_postal_row">
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label"
                                                          data-text="<?php _e('Distrito',  'avify-wordpress'); ?>"

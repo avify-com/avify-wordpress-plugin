@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Avify\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-21 01:59+0000\n"
-"PO-Revision-Date: 2023-09-24 00:49+0000\n"
+"PO-Revision-Date: 2023-10-22 01:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "Language: en_US\n"
@@ -102,6 +102,9 @@ msgstr "Continue to payment"
 
 msgid "Dirección de facturación"
 msgstr "Billing address"
+
+msgid "Dirección de envío"
+msgstr "Shipping address"
 
 msgid "Agregar dirección de facturación diferente"
 msgstr "Add different billing address"
