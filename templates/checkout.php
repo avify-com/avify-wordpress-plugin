@@ -219,10 +219,11 @@ $cart = WC()->cart;
                                                 <div class="avf_form-row avf_form-row-1-of-2" id="avf_state_and_city_row">
                                                     <div class="avf_form-input">
                                                         <div class="avf_form-input-label"
-                                                             data-text="<?php _e('Provincia',  'avify-wordpress'); ?>"
+                                                             data-text="<?php _e('Estado',  'avify-wordpress'); ?>"
+                                                             data-cr-text="<?php _e('Provincia',  'avify-wordpress'); ?>"
                                                              data-mx-text="<?php _e('Estado',  'avify-wordpress'); ?>"
                                                         >
-                                                            <b><?php _e('Provincia',  'avify-wordpress'); ?></b> <span>*</span>
+                                                            <b><?php _e('Estado',  'avify-wordpress'); ?></b> <span>*</span>
                                                         </div>
 
                                                         <div class="avf_form-input-inner">
@@ -232,11 +233,11 @@ $cart = WC()->cart;
 
                                                     <div class="avf_form-input">
                                                         <div class="avf_form-input-label"
-                                                             data-text="<?php _e('Cantón',  'avify-wordpress'); ?>"
+                                                             data-text="<?php _e('Ciudad',  'avify-wordpress'); ?>"
                                                              data-mx-text="<?php _e('Ciudad',  'avify-wordpress'); ?>"
                                                              data-cr-text="<?php _e('Cantón',  'avify-wordpress'); ?>"
                                                         >
-                                                            <b><?php _e('Cantón',  'avify-wordpress'); ?></b> <span>*</span>
+                                                            <b><?php _e('Ciudad',  'avify-wordpress'); ?></b> <span>*</span>
                                                         </div>
 
                                                         <div class="avf_form-input-inner">
@@ -448,10 +449,11 @@ $cart = WC()->cart;
                                             <div class="avf_form-row avf_form-row-1-of-2" id="avf_dif_state_and_city_row">
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label"
-                                                         data-text="<?php _e('Provincia',  'avify-wordpress'); ?>"
+                                                         data-text="<?php _e('Estado',  'avify-wordpress'); ?>"
+                                                         data-cr-text="<?php _e('Provincia',  'avify-wordpress'); ?>"
                                                          data-mx-text="<?php _e('Estado',  'avify-wordpress'); ?>"
                                                     >
-                                                        <b><?php _e('Provincia',  'avify-wordpress'); ?></b> <span>*</span>
+                                                        <b><?php _e('Estado',  'avify-wordpress'); ?></b> <span>*</span>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
@@ -463,11 +465,11 @@ $cart = WC()->cart;
 
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label"
-                                                         data-text="<?php _e('Cantón',  'avify-wordpress'); ?>"
+                                                         data-text="<?php _e('Ciudad',  'avify-wordpress'); ?>"
                                                          data-mx-text="<?php _e('Ciudad',  'avify-wordpress'); ?>"
                                                          data-cr-text="<?php _e('Cantón',  'avify-wordpress'); ?>"
                                                     >
-                                                        <b><?php _e('Cantón',  'avify-wordpress'); ?></b> <span>*</span>
+                                                        <b><?php _e('Ciudad',  'avify-wordpress'); ?></b> <span>*</span>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
