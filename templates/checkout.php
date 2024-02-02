@@ -334,7 +334,7 @@ $cart = WC()->cart;
                                             </div>
                                         </div>
 
-                                        <div class="step-content-shipping-var-loader" id="avf_shipping_methods_loader">
+                                        <div class="step-content-shipping-var-loader" id="avf_shipping_methods_loader" style="display: none">
                                             <div class="avf_img">
                                                 <img src="<?= plugin_dir_url( __FILE__ ) ?>../assets/img/loading.gif" alt="">
                                             </div>
@@ -557,6 +557,7 @@ $cart = WC()->cart;
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label">
                                                         <?php _e('Número de identificación',  'avify-wordpress'); ?>
+                                                        <span>*</span>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
