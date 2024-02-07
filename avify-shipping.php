@@ -149,15 +149,14 @@ if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_
                                 "Cookie: " . $avifyCookie ?: "",
                                 'Content-Type: application/json'
                             ],
-                            json_encode([
+                            json_encode(array_merge($address, [
                                 "items" => $cart->get_cart(),
                                 "country_id" => $address['country'],
-                                "postcode" => $address['postcode'],
-                                //"currency" => get_woocommerce_currency(),
                                 "weight" => wc_get_weight( $cart->get_cart_contents_weight(), 'g' ),
                                 "latitude" => $latitude,
-                                "longitude" => $longitude
-                            ]), $responseHeaders
+                                "longitude" => $longitude,
+	                            //"currency" => get_woocommerce_currency(),
+                            ])), $responseHeaders
                         );
                         avify_log(json_encode($avifyRates));
                         if (!isset($avifyRates['data'])) {
