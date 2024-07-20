@@ -163,7 +163,7 @@ function add_cart_item_data( $cart_item_data, $product_id ) {
 		$found      = false;
 		$isRequire  = $avfCustomOpt['is_require'];
 		$valueFound = '';
-		foreach ( $cart_item_data['avify_custom_options'] as $id => $value ) {
+		foreach ( ($cart_item_data['avify_custom_options'] ?? []) as $id => $value ) {
 			$id = str_replace( 'avify_option_', '', $id );
 			$id = explode( '-', $id );
 			if ( $avfCustomOpt['option_id'] == $id[0] ) {

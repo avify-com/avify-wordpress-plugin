@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) exit;
  * Plugin Name: Avify
  * Plugin URI:
  * Description: Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
- * Version: 1.2.9
+ * Version: 1.3.0
  * Author: Avify
  * Author URI: https://avify.com/
  * Text Domain: avify-wordpress
@@ -162,7 +162,7 @@ function register_avify_settings() {
             $options = get_option('avify-settings-options');
             $checked = isset($options[$field]) ? checked('on', $options[$field], false) : '';
             echo "<input type='checkbox' name='avify-settings-options[$field]' $checked />";
-            echo "<p>Debes instalar el plugin 'Checkout Files Upload for WooCommerce' para un correcto funcionamiento</p>";
+            echo "<em>Debes instalar el plugin 'Checkout Files Upload for WooCommerce' para un correcto funcionamiento</em>";
         },
         $page, $section
     );
@@ -174,7 +174,29 @@ function register_avify_settings() {
             $options = get_option('avify-settings-options');
             $checked = isset($options[$field]) ? checked('on', $options[$field], false) : '';
             echo "<input type='checkbox' name='avify-settings-options[$field]' $checked />";
-            echo "<p>Debes configurar los custom fields requeridos usando el plugin 'Checkout Field Editor for WooCommerce'</p>";
+            echo "<em>Debes configurar los custom fields requeridos usando el plugin 'Checkout Field Editor for WooCommerce'</em>";
+        },
+        $page, $section
+    );
+
+    $field = 'avify_loader_gif_url';
+    add_settings_field(
+        $field, 'URL de gif de carga',
+        function () use ($field) {
+            $options = get_option('avify-settings-options');
+            $value = $options[$field] ?? '';
+            echo "<input style='width: 100%' type='text' name='avify-settings-options[$field]' value='$value' />";
+        },
+        $page, $section
+    );
+
+    $field = 'avify_buttons_color';
+    add_settings_field(
+        $field, 'Color de botones',
+        function () use ($field) {
+            $options = get_option('avify-settings-options');
+            $value = $options[$field] ?? '';
+            echo "<input type='color' name='avify-settings-options[$field]' value='$value' />";
         },
         $page, $section
     );

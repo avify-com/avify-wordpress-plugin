@@ -5,7 +5,13 @@ if (($options['avify_enable_checkout'] ?? '') !== 'on') {
     return;
 }
 
-$svgCheck = '<div class="step-item-circle">
+$loaderUrl = empty($options['avify_loader_gif_url']) ?
+    ( plugin_dir_url( __FILE__ ) . "../assets/img/loader.gif" ) :
+    $options['avify_loader_gif_url'];
+
+$buttonsColor = $options['avify_buttons_color'] ?? '';
+
+$svgCheck = '<div class="step-item-circle" style="' . ($buttonsColor ? "background-color: $buttonsColor" : '') . '">
                 <div class="step-item-circle-check">
                     <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -141,19 +147,13 @@ $cart = WC()->cart;
                             </div>
 
                             <div class="step-content-next-step-button">
-                                <div class="avf_btn type-1 var-disabled" id="avf_to_second_step_button">
-                                    <div class="avf_btn-inner">
-                                        <div class="avf_btn-frame"></div>
-
-                                        <div class="avf_btn-text">
-                                            <?php if($cart && $cart->needs_shipping()): ?>
-                                                <?php _e('Continuar a envío',  'avify-wordpress'); ?>
-                                            <?php else: ?>
-                                                <?php _e('Continuar a pago',  'avify-wordpress'); ?>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
+                                <button class="avf_btn type-1 var-disabled" id="avf_to_second_step_button">
+	                                <?php if($cart && $cart->needs_shipping()): ?>
+		                                <?php _e('Continuar a envío',  'avify-wordpress'); ?>
+	                                <?php else: ?>
+		                                <?php _e('Continuar a pago',  'avify-wordpress'); ?>
+	                                <?php endif; ?>
+                                </button>
                             </div>
                         </div>
 
@@ -336,7 +336,7 @@ $cart = WC()->cart;
 
                                         <div class="step-content-shipping-var-loader" id="avf_shipping_methods_loader" style="display: none">
                                             <div class="avf_img">
-                                                <img src="<?= plugin_dir_url( __FILE__ ) ?>../assets/img/loading.gif" alt="">
+                                                <img src="<?= $loaderUrl ?>" alt="Loader">
                                             </div>
                                         </div>
                                     </div>
@@ -353,15 +353,9 @@ $cart = WC()->cart;
                                 </div>
 
                                 <div class="step-content-next-step-button">
-                                    <div class="avf_btn type-1 var-disabled" id="avf_to_third_step_button">
-                                        <div class="avf_btn-inner">
-                                            <div class="avf_btn-frame"></div>
-
-                                            <div class="avf_btn-text">
-                                                <?php _e('Continuar a pago',  'avify-wordpress'); ?>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <button class="avf_btn type-1 var-disabled" id="avf_to_third_step_button">
+	                                    <?php _e('Continuar a pago',  'avify-wordpress'); ?>
+                                    </button>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -571,14 +565,9 @@ $cart = WC()->cart;
                             </div>
 
                             <div class="step-content-next-step-button">
-                                <div class="avf_btn type-1" id="avf_checkout_button">
-                                    <div class="avf_btn-inner">
-                                        <div class="avf_btn-frame"></div>
-                                        <div class="avf_btn-text">
-                                            <?php _e('Realizar Pedido',  'avify-wordpress'); ?>
-                                        </div>
-                                    </div>
-                                </div>
+                                <button class="avf_btn type-1" id="avf_checkout_button">
+	                                <?php _e('Realizar Pedido',  'avify-wordpress'); ?>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -737,7 +726,7 @@ $cart = WC()->cart;
 
                         <div class="avf-checkout-loader">
                             <div class="avf_img">
-                                <img src="<?= plugin_dir_url( __FILE__ ) ?>../assets/img/loading.gif" alt="">
+                                <img src="<?= $loaderUrl ?>" alt="Loader">
                             </div>
                         </div>
                     </div>
@@ -782,25 +771,13 @@ $cart = WC()->cart;
 
             <div class="el-button-1">
                 <a class="avf_btn type-1" href="/">
-                    <div class="avf_btn-inner">
-                        <div class="avf_btn-frame"></div>
-
-                        <div class="avf_btn-text">
-                            <?php _e('Volver a la tienda',  'avify-wordpress'); ?>
-                        </div>
-                    </div>
+	                <?php _e('Volver a la tienda',  'avify-wordpress'); ?>
                 </a>
             </div>
 
             <div class="el-button-2">
                 <a class="avf_btn type-1 var-a" id="avf_register_after_checkout" href="#">
-                    <div class="avf_btn-inner">
-                        <div class="avf_btn-frame"></div>
-
-                        <div class="avf_btn-text">
-                            <?php _e('Crear una cuenta',  'avify-wordpress'); ?>
-                        </div>
-                    </div>
+	                <?php _e('Crear una cuenta',  'avify-wordpress'); ?>
                 </a>
             </div>
 
@@ -838,4 +815,11 @@ $cart = WC()->cart;
             </div>
         </div>
     </div>
+	<?php if($buttonsColor): ?>
+    <style>
+        html body .avf_btn {
+            background: <?php echo $buttonsColor ?> !important;
+        }
+    </style>
+	<?php endif ?>
 </section>
