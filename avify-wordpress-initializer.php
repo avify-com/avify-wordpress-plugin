@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) exit;
  * Plugin Name: Avify
  * Plugin URI:
  * Description: Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
- * Version: 1.3.0
+ * Version: 1.3.1
  * Author: Avify
  * Author URI: https://avify.com/
  * Text Domain: avify-wordpress
@@ -200,5 +200,40 @@ function register_avify_settings() {
         },
         $page, $section
     );
+
+	$section = 'avify-settings-address';
+	add_settings_section(
+		$section,
+		'Direcciones',
+		function() {echo '';},
+		$page
+	);
+
+    foreach ([
+	    'avify_province' => 'Provincia/Estado',
+	    'avify_city' => 'Ciudad/Cantón',
+        'avify_district' => 'Distrito'
+    ] as $field => $title) {
+	    add_settings_field(
+		    $field, $title,
+		    function () use ($field) {
+			    $options = get_option('avify-settings-options');
+			    $value = $options[$field] ?? '';
+			    echo "<input style='width: 100%' type='text' name='avify-settings-options[$field]' value='$value' />";
+		    },
+		    $page, $section
+	    );
+    }
+
+	$field = 'avify_zip_optional';
+	add_settings_field(
+		$field, 'Código postal opcional',
+		function () use ($field) {
+			$options = get_option('avify-settings-options');
+			$checked = isset($options[$field]) ? checked('on', $options[$field], false) : '';
+			echo "<input type='checkbox' name='avify-settings-options[$field]' $checked />";
+		},
+		$page, $section
+	);
 }
 add_action('admin_init', 'register_avify_settings');

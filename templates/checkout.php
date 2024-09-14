@@ -1,17 +1,17 @@
 <?php
-$options = get_option('avify-settings-options');
-if (($options['avify_enable_checkout'] ?? '') !== 'on') {
-    echo do_shortcode('[woocommerce_checkout]');
-    return;
+$options = get_option( 'avify-settings-options' );
+if ( ( $options['avify_enable_checkout'] ?? '' ) !== 'on' ) {
+	echo do_shortcode( '[woocommerce_checkout]' );
+	return;
 }
 
-$loaderUrl = empty($options['avify_loader_gif_url']) ?
-    ( plugin_dir_url( __FILE__ ) . "../assets/img/loader.gif" ) :
-    $options['avify_loader_gif_url'];
+$loaderUrl = empty( $options['avify_loader_gif_url'] ) ?
+	( plugin_dir_url( __FILE__ ) . "../assets/img/loader.gif" ) :
+	$options['avify_loader_gif_url'];
 
 $buttonsColor = $options['avify_buttons_color'] ?? '';
 
-$svgCheck = '<div class="step-item-circle" style="' . ($buttonsColor ? "background-color: $buttonsColor" : '') . '">
+$svgCheck = '<div class="step-item-circle" style="' . ( $buttonsColor ? "background-color: $buttonsColor" : '' ) . '">
                 <div class="step-item-circle-check">
                     <svg width="25" height="25" viewBox="0 0 25 25" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -32,18 +32,19 @@ $cart = WC()->cart;
 
 <div>
     <script>
-        let avfIsVirtual = '<?= $cart && !$cart->needs_shipping() ?>';
-        let avfAttachmentRequired = '<?= ($options['avify_attachment_required'] ?? '') === 'on' ?>';
-        let avfShowElectronicInvoice = '<?= ($options['avify_show_electronic_invoice'] ?? '') === 'on' ?>';
+        let avfIsVirtual = '<?= $cart && ! $cart->needs_shipping() ?>';
+        let avfAttachmentRequired = '<?= ( $options['avify_attachment_required'] ?? '' ) === 'on' ?>';
+        let avfShowElectronicInvoice = '<?= ( $options['avify_show_electronic_invoice'] ?? '' ) === 'on' ?>';
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Open+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
 </div>
 <section class="type-woo-checkout">
     <div class="wrapper">
         <div class="content">
-            <?= do_shortcode('[woocommerce_checkout]'); ?>
+			<?= do_shortcode( '[woocommerce_checkout]' ); ?>
         </div>
     </div>
 </section>
@@ -52,33 +53,33 @@ $cart = WC()->cart;
         <div class="content">
             <div class="step-list">
                 <div class="step-item">
-                    <?= $svgCheck ?>
+					<?= $svgCheck ?>
 
                     <div class="step-item-text">
                         <div class="avf_txt type-2">
-                            <?php _e('Datos personales',  'avify-wordpress'); ?>
+							<?php _e( 'Datos personales', 'avify-wordpress' ); ?>
                         </div>
                     </div>
                 </div>
 
-                <?php if($cart && (!$cart->get_cart() || $cart->needs_shipping())): ?>
+				<?php if ( $cart && ( ! $cart->get_cart() || $cart->needs_shipping() ) ): ?>
                     <div class="step-item">
-                        <?= $svgCheck ?>
+						<?= $svgCheck ?>
 
                         <div class="step-item-text">
                             <div class="avf_txt type-2">
-                                <?php _e('Envío',  'avify-wordpress'); ?>
+								<?php _e( 'Envío', 'avify-wordpress' ); ?>
                             </div>
                         </div>
                     </div>
-                <?php endif; ?>
+				<?php endif; ?>
 
                 <div class="step-item">
-                    <?= $svgCheck ?>
+					<?= $svgCheck ?>
 
                     <div class="step-item-text">
                         <div class="avf_txt type-2">
-                            <?php _e('Método de pago',  'avify-wordpress'); ?>
+							<?php _e( 'Método de pago', 'avify-wordpress' ); ?>
                         </div>
                     </div>
                 </div>
@@ -90,7 +91,7 @@ $cart = WC()->cart;
                         <div class="step-content" data-step="personal">
                             <div class="step-content-title">
                                 <div class="avf_txt type-3">
-                                    <?php _e('Datos personales',  'avify-wordpress'); ?>
+									<?php _e( 'Datos personales', 'avify-wordpress' ); ?>
                                 </div>
                             </div>
 
@@ -101,7 +102,7 @@ $cart = WC()->cart;
                                     <div class="avf_form-row avf_form-row-1-of-2">
                                         <div class="avf_form-input">
                                             <div class="avf_form-input-label">
-                                                <?php _e('Nombre',  'avify-wordpress'); ?> <span>*</span>
+												<?php _e( 'Nombre', 'avify-wordpress' ); ?> <span>*</span>
                                             </div>
 
                                             <div class="avf_form-input-inner">
@@ -111,7 +112,7 @@ $cart = WC()->cart;
 
                                         <div class="avf_form-input">
                                             <div class="avf_form-input-label">
-                                                <?php _e('Apellidos',  'avify-wordpress'); ?> <span>*</span>
+												<?php _e( 'Apellidos', 'avify-wordpress' ); ?> <span>*</span>
                                             </div>
 
                                             <div class="avf_form-input-inner">
@@ -123,7 +124,7 @@ $cart = WC()->cart;
                                     <div class="avf_form-row">
                                         <div class="avf_form-input">
                                             <div class="avf_form-input-label">
-                                                <?php _e('Correo electrónico',  'avify-wordpress'); ?> <span>*</span>
+												<?php _e( 'Correo electrónico', 'avify-wordpress' ); ?> <span>*</span>
                                             </div>
 
                                             <div class="avf_form-input-inner">
@@ -135,7 +136,7 @@ $cart = WC()->cart;
                                     <div class="avf_form-row">
                                         <div class="avf_form-input">
                                             <div class="avf_form-input-label">
-                                                <?php _e('Número de teléfono',  'avify-wordpress'); ?> <span>*</span>
+												<?php _e( 'Número de teléfono', 'avify-wordpress' ); ?> <span>*</span>
                                             </div>
 
                                             <div class="avf_form-input-inner">
@@ -148,20 +149,20 @@ $cart = WC()->cart;
 
                             <div class="step-content-next-step-button">
                                 <button class="avf_btn type-1 var-disabled" id="avf_to_second_step_button">
-	                                <?php if($cart && $cart->needs_shipping()): ?>
-		                                <?php _e('Continuar a envío',  'avify-wordpress'); ?>
-	                                <?php else: ?>
-		                                <?php _e('Continuar a pago',  'avify-wordpress'); ?>
-	                                <?php endif; ?>
+									<?php if ( $cart && $cart->needs_shipping() ): ?>
+										<?php _e( 'Continuar a envío', 'avify-wordpress' ); ?>
+									<?php else: ?>
+										<?php _e( 'Continuar a pago', 'avify-wordpress' ); ?>
+									<?php endif; ?>
                                 </button>
                             </div>
                         </div>
 
-                        <?php if($cart && $cart->needs_shipping()): ?>
+						<?php if ( $cart && $cart->needs_shipping() ): ?>
                             <div class="step-content" data-step="shipping">
                                 <div class="step-content-title">
                                     <div class="avf_txt type-3">
-                                        <?php _e('Dirección de entrega',  'avify-wordpress'); ?>
+										<?php _e( 'Dirección de entrega', 'avify-wordpress' ); ?>
                                     </div>
                                 </div>
 
@@ -177,7 +178,7 @@ $cart = WC()->cart;
 
                                             <div class="step-content-shipping-method-item-text">
                                                 <div class="avf_txt type-4">
-                                                    <?php _e('Entrega a domicilio',  'avify-wordpress'); ?>
+													<?php _e( 'Entrega a domicilio', 'avify-wordpress' ); ?>
                                                 </div>
                                             </div>
                                         </label>
@@ -192,7 +193,7 @@ $cart = WC()->cart;
 
                                             <div class="step-content-shipping-method-item-text">
                                                 <div class="avf_txt type-4">
-                                                    <?php _e('Pasar a recoger',  'avify-wordpress'); ?>
+													<?php _e( 'Pasar a recoger', 'avify-wordpress' ); ?>
                                                 </div>
                                             </div>
                                         </label>
@@ -206,7 +207,7 @@ $cart = WC()->cart;
                                                 <div class="avf_form-row">
                                                     <div class="avf_form-input">
                                                         <div class="avf_form-input-label">
-                                                            <?php _e('País',  'avify-wordpress'); ?> <span>*</span>
+															<?php _e( 'País', 'avify-wordpress' ); ?> <span>*</span>
                                                         </div>
 
                                                         <div class="avf_form-input-inner">
@@ -216,14 +217,14 @@ $cart = WC()->cart;
                                                     </div>
                                                 </div>
 
-                                                <div class="avf_form-row avf_form-row-1-of-2" id="avf_state_and_city_row">
+                                                <div class="avf_form-row avf_form-row-1-of-2"
+                                                     id="avf_state_and_city_row">
                                                     <div class="avf_form-input">
                                                         <div class="avf_form-input-label"
-                                                             data-text="<?php _e('Estado',  'avify-wordpress'); ?>"
-                                                             data-cr-text="<?php _e('Provincia',  'avify-wordpress'); ?>"
-                                                             data-mx-text="<?php _e('Estado',  'avify-wordpress'); ?>"
+                                                             data-text="<?php _e( ( $options['avify_province'] ?? 'Provincia' ), 'avify-wordpress' ); ?>"
                                                         >
-                                                            <b><?php _e('Estado',  'avify-wordpress'); ?></b> <span>*</span>
+                                                            <b><?php _e( ( $options['avify_province'] ?? 'Provincia' ), 'avify-wordpress' ); ?></b>
+                                                            <span>*</span>
                                                         </div>
 
                                                         <div class="avf_form-input-inner">
@@ -233,11 +234,10 @@ $cart = WC()->cart;
 
                                                     <div class="avf_form-input">
                                                         <div class="avf_form-input-label"
-                                                             data-text="<?php _e('Ciudad',  'avify-wordpress'); ?>"
-                                                             data-mx-text="<?php _e('Ciudad',  'avify-wordpress'); ?>"
-                                                             data-cr-text="<?php _e('Cantón',  'avify-wordpress'); ?>"
+                                                             data-text="<?php _e( ( $options['avify_city'] ?? 'Cantón' ), 'avify-wordpress' ); ?>"
                                                         >
-                                                            <b><?php _e('Ciudad',  'avify-wordpress'); ?></b> <span>*</span>
+                                                            <b><?php _e( ( $options['avify_city'] ?? 'Cantón' ), 'avify-wordpress' ); ?></b>
+                                                            <span>*</span>
                                                         </div>
 
                                                         <div class="avf_form-input-inner">
@@ -246,13 +246,13 @@ $cart = WC()->cart;
                                                     </div>
                                                 </div>
 
-                                                <div class="avf_form-row avf_form-row-1-of-2" id="avf_district_and_postal_row">
+                                                <div class="avf_form-row avf_form-row-1-of-2"
+                                                     id="avf_district_and_postal_row">
                                                     <div class="avf_form-input">
                                                         <div class="avf_form-input-label"
-                                                             data-text="<?php _e('Distrito',  'avify-wordpress'); ?>"
-                                                             data-mx-text="<?php _e('Colonia',  'avify-wordpress'); ?>"
+                                                             data-text="<?php _e( ( $options['avify_district'] ?? 'Distrito' ), 'avify-wordpress' ); ?>"
                                                         >
-                                                            <b><?php _e('Distrito',  'avify-wordpress'); ?></b>
+                                                            <b><?php _e( ( $options['avify_district'] ?? 'Distrito' ), 'avify-wordpress' ); ?></b>
                                                         </div>
 
                                                         <div class="avf_form-input-inner">
@@ -262,11 +262,12 @@ $cart = WC()->cart;
 
                                                     <div class="avf_form-input">
                                                         <div class="avf_form-input-label">
-                                                            <?php _e('Código postal',  'avify-wordpress'); ?> <span>*</span>
+															<?php _e( 'Código postal', 'avify-wordpress' ); ?>
+	                                                        <?php echo ( $options['avify_zip_optional'] ?? '' ) === 'on' ? '' : '<span>*</span>' ?>
                                                         </div>
 
                                                         <div class="avf_form-input-inner">
-                                                            <input type="text" id="avf_billing_postal">
+                                                            <input type="text" id="avf_billing_postal" data-optional="<?php echo ( $options['avify_zip_optional'] ?? '' ) === 'on' ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -274,7 +275,7 @@ $cart = WC()->cart;
                                                 <div class="avf_form-row">
                                                     <div class="avf_form-input">
                                                         <div class="avf_form-input-label">
-                                                            <?php _e('Dirección exacta',  'avify-wordpress'); ?> <span>*</span>
+															<?php _e( 'Dirección exacta', 'avify-wordpress' ); ?> <span>*</span>
                                                         </div>
 
                                                         <div class="avf_form-input-inner">
@@ -288,13 +289,13 @@ $cart = WC()->cart;
                                         <div class="step-content-map">
                                             <div class="step-content-map-label">
                                                 <div class="avf_txt type-5">
-                                                    <?php _e('Coloque su ubicación en el mapa',  'avify-wordpress'); ?>
+													<?php _e( 'Coloque su ubicación en el mapa', 'avify-wordpress' ); ?>
                                                 </div>
                                             </div>
 
                                             <div class="step-content-map-text">
                                                 <div class="avf_txt type-6">
-                                                    <?php _e('Coloque el punto en el mapa para que el repartidor sepa con mayor certeza dónde entregará el paquete.',  'avify-wordpress'); ?>
+													<?php _e( 'Coloque el punto en el mapa para que el repartidor sepa con mayor certeza dónde entregará el paquete.', 'avify-wordpress' ); ?>
                                                 </div>
                                             </div>
 
@@ -304,7 +305,7 @@ $cart = WC()->cart;
 
                                             <div class="step-content-map-text-2">
                                                 <div class="avf_txt type-6">
-                                                    <?php _e('Al colocar los datos de envío, se mostrarán las opciones disponibles',  'avify-wordpress'); ?>
+													<?php _e( 'Al colocar los datos de envío, se mostrarán las opciones disponibles', 'avify-wordpress' ); ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -334,7 +335,8 @@ $cart = WC()->cart;
                                             </div>
                                         </div>
 
-                                        <div class="step-content-shipping-var-loader" id="avf_shipping_methods_loader" style="display: none">
+                                        <div class="step-content-shipping-var-loader" id="avf_shipping_methods_loader"
+                                             style="display: none">
                                             <div class="avf_img">
                                                 <img src="<?= $loaderUrl ?>" alt="Loader">
                                             </div>
@@ -344,7 +346,7 @@ $cart = WC()->cart;
                                     <div class="step-content-shipping-method-content-item step-content-shipping-method-content-item-2">
                                         <div class="step-content-self-pickup-text">
                                             <div class="avf_txt type-8">
-                                                <?php _e('Anote esta dirección o revise su correo al finalizar la orden para pasar a recoger',  'avify-wordpress'); ?>
+												<?php _e( 'Anote esta dirección o revise su correo al finalizar la orden para pasar a recoger', 'avify-wordpress' ); ?>
                                             </div>
                                         </div>
 
@@ -354,16 +356,16 @@ $cart = WC()->cart;
 
                                 <div class="step-content-next-step-button">
                                     <button class="avf_btn type-1 var-disabled" id="avf_to_third_step_button">
-	                                    <?php _e('Continuar a pago',  'avify-wordpress'); ?>
+										<?php _e( 'Continuar a pago', 'avify-wordpress' ); ?>
                                     </button>
                                 </div>
                             </div>
-                        <?php endif; ?>
+						<?php endif; ?>
 
                         <div class="step-content" data-step="payment">
                             <div class="step-content-title">
                                 <div class="avf_txt type-3">
-                                    <?php _e('Método de pago',  'avify-wordpress'); ?>
+									<?php _e( 'Método de pago', 'avify-wordpress' ); ?>
                                 </div>
                             </div>
 
@@ -376,13 +378,13 @@ $cart = WC()->cart;
                             <div class="step-content-billing-address">
                                 <div class="step-content-avf-address-summary">
                                     <div class="avf_txt type-8">
-                                        <?php _e('Dirección de envío',  'avify-wordpress'); ?>
+										<?php _e( 'Dirección de envío', 'avify-wordpress' ); ?>
                                     </div>
                                     <div class="avf_txt type-6" id="avf_shipping_summary"></div>
                                 </div>
                                 <div class="step-content-avf-address-summary">
                                     <div class="avf_txt type-8">
-                                        <?php _e('Dirección de facturación',  'avify-wordpress'); ?>
+										<?php _e( 'Dirección de facturación', 'avify-wordpress' ); ?>
                                     </div>
                                     <div class="avf_txt type-6" id="avf_billing_summary"></div>
                                 </div>
@@ -398,7 +400,7 @@ $cart = WC()->cart;
                                     </div>
                                     <div class="step-content-avf-dif-billing-text">
                                         <div class="avf_txt type-7">
-                                            <?php _e('Agregar dirección de facturación diferente',  'avify-wordpress'); ?>
+											<?php _e( 'Agregar dirección de facturación diferente', 'avify-wordpress' ); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -408,7 +410,7 @@ $cart = WC()->cart;
                                             <div class="avf_form-row avf_form-row-1-of-2">
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label">
-                                                        <?php _e('Nombre',  'avify-wordpress'); ?> <span>*</span>
+														<?php _e( 'Nombre', 'avify-wordpress' ); ?> <span>*</span>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
@@ -418,7 +420,7 @@ $cart = WC()->cart;
 
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label">
-                                                        <?php _e('Apellidos',  'avify-wordpress'); ?> <span>*</span>
+														<?php _e( 'Apellidos', 'avify-wordpress' ); ?> <span>*</span>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
@@ -430,7 +432,7 @@ $cart = WC()->cart;
                                             <div class="avf_form-row">
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label">
-                                                        <?php _e('País',  'avify-wordpress'); ?> <span>*</span>
+														<?php _e( 'País', 'avify-wordpress' ); ?> <span>*</span>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
@@ -440,14 +442,14 @@ $cart = WC()->cart;
                                                 </div>
                                             </div>
 
-                                            <div class="avf_form-row avf_form-row-1-of-2" id="avf_dif_state_and_city_row">
+                                            <div class="avf_form-row avf_form-row-1-of-2"
+                                                 id="avf_dif_state_and_city_row">
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label"
-                                                         data-text="<?php _e('Estado',  'avify-wordpress'); ?>"
-                                                         data-cr-text="<?php _e('Provincia',  'avify-wordpress'); ?>"
-                                                         data-mx-text="<?php _e('Estado',  'avify-wordpress'); ?>"
+                                                         data-text="<?php _e( ( $options['avify_province'] ?? 'Provincia' ), 'avify-wordpress' ); ?>"
                                                     >
-                                                        <b><?php _e('Estado',  'avify-wordpress'); ?></b> <span>*</span>
+                                                        <b><?php _e( ( $options['avify_province'] ?? 'Provincia' ), 'avify-wordpress' ); ?></b>
+                                                        <span>*</span>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
@@ -459,11 +461,10 @@ $cart = WC()->cart;
 
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label"
-                                                         data-text="<?php _e('Ciudad',  'avify-wordpress'); ?>"
-                                                         data-mx-text="<?php _e('Ciudad',  'avify-wordpress'); ?>"
-                                                         data-cr-text="<?php _e('Cantón',  'avify-wordpress'); ?>"
+                                                         data-text="<?php _e( ( $options['avify_city'] ?? 'Cantón' ), 'avify-wordpress' ); ?>"
                                                     >
-                                                        <b><?php _e('Ciudad',  'avify-wordpress'); ?></b> <span>*</span>
+                                                        <b><?php _e( ( $options['avify_city'] ?? 'Cantón' ), 'avify-wordpress' ); ?></b>
+                                                        <span>*</span>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
@@ -472,13 +473,13 @@ $cart = WC()->cart;
                                                 </div>
                                             </div>
 
-                                            <div class="avf_form-row avf_form-row-1-of-2" id="avf_dif_district_and_postal_row">
+                                            <div class="avf_form-row avf_form-row-1-of-2"
+                                                 id="avf_dif_district_and_postal_row">
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label"
-                                                         data-text="<?php _e('Distrito',  'avify-wordpress'); ?>"
-                                                         data-mx-text="<?php _e('Colonia',  'avify-wordpress'); ?>"
+                                                         data-text="<?php _e( ( $options['avify_district'] ?? 'Distrito' ), 'avify-wordpress' ); ?>"
                                                     >
-                                                        <b><?php _e('Distrito',  'avify-wordpress'); ?></b>
+                                                        <b><?php _e( ( $options['avify_district'] ?? 'Distrito' ), 'avify-wordpress' ); ?></b>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
@@ -488,11 +489,12 @@ $cart = WC()->cart;
 
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label">
-                                                        <?php _e('Código postal',  'avify-wordpress'); ?> <span>*</span>
+														<?php _e( 'Código postal', 'avify-wordpress' ); ?>
+														<?php echo ( $options['avify_zip_optional'] ?? '' ) === 'on' ? '' : '<span>*</span>' ?>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
-                                                        <input type="text" id="avf_dif_billing_postal">
+                                                        <input type="text" id="avf_dif_billing_postal" data-optional="<?php echo ( $options['avify_zip_optional'] ?? '' ) === 'on' ?>">
                                                     </div>
                                                 </div>
                                             </div>
@@ -500,7 +502,8 @@ $cart = WC()->cart;
                                             <div class="avf_form-row">
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label">
-                                                        <?php _e('Dirección exacta',  'avify-wordpress'); ?> <span>*</span>
+														<?php _e( 'Dirección exacta', 'avify-wordpress' ); ?>
+                                                        <span>*</span>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
@@ -527,7 +530,7 @@ $cart = WC()->cart;
                                         </div>
                                         <div class="avf-electronic-invoice-label">
                                             <div class="avf_txt type-7">
-                                                <?php _e('Deseo factura electrónica',  'avify-wordpress'); ?>
+												<?php _e( 'Deseo factura electrónica', 'avify-wordpress' ); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -538,7 +541,7 @@ $cart = WC()->cart;
                                             <div class="avf_form-row avf_form-row-1-of-2">
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label">
-                                                        <?php _e('Tipo de identificación',  'avify-wordpress'); ?>
+														<?php _e( 'Tipo de identificación', 'avify-wordpress' ); ?>
                                                     </div>
 
                                                     <div class="avf_form-input-inner">
@@ -550,7 +553,7 @@ $cart = WC()->cart;
 
                                                 <div class="avf_form-input">
                                                     <div class="avf_form-input-label">
-                                                        <?php _e('Número de identificación',  'avify-wordpress'); ?>
+														<?php _e( 'Número de identificación', 'avify-wordpress' ); ?>
                                                         <span>*</span>
                                                     </div>
 
@@ -566,7 +569,7 @@ $cart = WC()->cart;
 
                             <div class="step-content-next-step-button">
                                 <button class="avf_btn type-1" id="avf_checkout_button">
-	                                <?php _e('Realizar Pedido',  'avify-wordpress'); ?>
+									<?php _e( 'Realizar Pedido', 'avify-wordpress' ); ?>
                                 </button>
                             </div>
                         </div>
@@ -575,35 +578,38 @@ $cart = WC()->cart;
 
                 <div class="main-container-item">
                     <button id="avf-open-order-summary">
-                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.00003 15.5C6.59557 15.5 6.23093 15.2564 6.07615 14.8827C5.92137 14.509 6.00692 14.0789 6.29292 13.7929L11.2929 8.79289C11.6834 8.40237 12.3166 8.40237 12.7071 8.79289L17.7071 13.7929C17.9931 14.0789 18.0787 14.509 17.9239 14.8827C17.7691 15.2564 17.4045 15.5 17 15.5H7.00003Z" fill="#000000"/>
+                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M7.00003 15.5C6.59557 15.5 6.23093 15.2564 6.07615 14.8827C5.92137 14.509 6.00692 14.0789 6.29292 13.7929L11.2929 8.79289C11.6834 8.40237 12.3166 8.40237 12.7071 8.79289L17.7071 13.7929C17.9931 14.0789 18.0787 14.509 17.9239 14.8827C17.7691 15.2564 17.4045 15.5 17 15.5H7.00003Z"
+                                  fill="#000000"/>
                         </svg>
                     </button>
                     <div class="review-order">
                         <div class="review-order-title">
                             <div class="avf_txt type-4">
-                                <?php _e('Resumen de la orden',  'avify-wordpress'); ?>
+								<?php _e( 'Resumen de la orden', 'avify-wordpress' ); ?>
                             </div>
                         </div>
 
                         <div class="review-order-product-list">
-                            <?php
-                            if ($cart) {
-                                foreach ($cart->get_cart() ?? [] as $cart_item) {
-                                    $product = $cart_item['data'];
-                                    $quantity = $cart_item['quantity'];
+							<?php
+							if ( $cart ) {
+								foreach ( $cart->get_cart() ?? [] as $cart_item ) {
+									$product  = $cart_item['data'];
+									$quantity = $cart_item['quantity'];
 
-                                    if (!empty($product)) {
-                                        ?>
+									if ( ! empty( $product ) ) {
+										?>
                                         <div class="review-order-product-item flex middle space-between">
                                             <div class="review-order-product-item-part flex middle">
                                                 <div class="review-order-product-item-image">
-                                                    <?= $product->get_image(); ?>
+													<?= $product->get_image(); ?>
                                                 </div>
 
                                                 <div class="review-order-product-item-name">
                                                     <div class="avf_txt type-9">
-                                                        <?= $product->get_name(); ?> x <?= $quantity; ?>
+														<?= $product->get_name(); ?> x <?= $quantity; ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -611,23 +617,23 @@ $cart = WC()->cart;
                                             <div class="review-order-product-item-price"
                                                  data-item-quantity="<?= $quantity; ?>">
                                                 <div class="avf_txt type-9">
-                                                    <?= get_woocommerce_currency_symbol(); ?>
-                                                    <?= $product->get_price(); ?>
+													<?= get_woocommerce_currency_symbol(); ?>
+													<?= $product->get_price(); ?>
                                                 </div>
                                             </div>
                                         </div>
-                                        <?php
-                                    }
-                                }
-                            }
-                            ?>
+										<?php
+									}
+								}
+							}
+							?>
                         </div>
 
                         <div class="review-order-total">
                             <div class="review-order-total-subtotal review-order-total-part-container">
                                 <div class="review-order-total-left-part">
                                     <div class="avf_txt type-7">
-                                        <?php _e('Subtotal',  'avify-wordpress'); ?>
+										<?php _e( 'Subtotal', 'avify-wordpress' ); ?>
                                     </div>
                                 </div>
 
@@ -641,7 +647,7 @@ $cart = WC()->cart;
                             <div class="review-order-total-shipping review-order-total-part-container">
                                 <div class="review-order-total-left-part">
                                     <div class="avf_txt type-10">
-                                        <?php _e('Envío',  'avify-wordpress'); ?>
+										<?php _e( 'Envío', 'avify-wordpress' ); ?>
                                     </div>
                                 </div>
 
@@ -653,7 +659,7 @@ $cart = WC()->cart;
                             <div class="review-order-total-discount review-order-total-part-container">
                                 <div class="review-order-total-left-part">
                                     <div class="avf_txt type-10">
-                                        <?php _e('Descuento',  'avify-wordpress'); ?>
+										<?php _e( 'Descuento', 'avify-wordpress' ); ?>
                                     </div>
                                 </div>
 
@@ -667,7 +673,7 @@ $cart = WC()->cart;
                             <div class="review-order-total-taxes review-order-total-part-container">
                                 <div class="review-order-total-left-part">
                                     <div class="avf_txt type-10">
-                                        <?php _e('Impuestos',  'avify-wordpress'); ?>
+										<?php _e( 'Impuestos', 'avify-wordpress' ); ?>
                                     </div>
                                 </div>
 
@@ -681,7 +687,7 @@ $cart = WC()->cart;
                             <div class="review-order-total-total review-order-total-part-container">
                                 <div class="review-order-total-left-part">
                                     <div class="avf_txt type-4">
-                                        <?php _e('Total',  'avify-wordpress'); ?>
+										<?php _e( 'Total', 'avify-wordpress' ); ?>
                                     </div>
                                 </div>
 
@@ -757,27 +763,27 @@ $cart = WC()->cart;
 
             <div class="el-title">
                 <div class="avf_txt type-11">
-                    <?php _e('¡Compra finalizada!',  'avify-wordpress'); ?>
+					<?php _e( '¡Compra finalizada!', 'avify-wordpress' ); ?>
                 </div>
             </div>
 
             <div class="el-text">
                 <div class="avf_txt type-12">
-                    <?php _e('Su orden ha sido tramitada de forma exitosa.',  'avify-wordpress'); ?>
-                    <?php _e('Hemos enviado un correo con la confirmación de su pedido',  'avify-wordpress'); ?>
+					<?php _e( 'Su orden ha sido tramitada de forma exitosa.', 'avify-wordpress' ); ?>
+					<?php _e( 'Hemos enviado un correo con la confirmación de su pedido', 'avify-wordpress' ); ?>
                     <span id="avf_order_number">#0000</span>
                 </div>
             </div>
 
             <div class="el-button-1">
                 <a class="avf_btn type-1" href="/">
-	                <?php _e('Volver a la tienda',  'avify-wordpress'); ?>
+					<?php _e( 'Volver a la tienda', 'avify-wordpress' ); ?>
                 </a>
             </div>
 
             <div class="el-button-2">
                 <a class="avf_btn type-1 var-a" id="avf_register_after_checkout" href="#">
-	                <?php _e('Crear una cuenta',  'avify-wordpress'); ?>
+					<?php _e( 'Crear una cuenta', 'avify-wordpress' ); ?>
                 </a>
             </div>
 
@@ -815,11 +821,11 @@ $cart = WC()->cart;
             </div>
         </div>
     </div>
-	<?php if($buttonsColor): ?>
-    <style>
-        html body .avf_btn {
-            background: <?php echo $buttonsColor ?> !important;
-        }
-    </style>
+	<?php if ( $buttonsColor ): ?>
+        <style>
+            html body .avf_btn {
+                background: <?php echo $buttonsColor ?> !important;
+            }
+        </style>
 	<?php endif ?>
 </section>
