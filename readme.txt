@@ -12,14 +12,13 @@ Connect your WooCommerce account to Avify and send all your orders to one centra
 
 == Description ==
 
-Avify is an Order Management System that allows small businesses to orchestrate multiple sales channels in one central platform.
+[Avify is a platform that gives you a WhatsApp CRM](https://avify.com/?utm_source=WP.PLUGIN.PAGE&utm_medium=LINK.WEB), an online store (or connection to an existing one), and a point of sale system for physical stores, all in one place. 
 
-With our technology you can receive orders and payments coming from Wordpress and merge them with any other one coming from social
-media interaction like Instagram, Facebook or WhatsApp, where you can collect orders using magic links. You can connect your delivery
-system and your billing provider and operate one powerful workflow in automatic pilot.
+By using [Avify](https://avify.com/?utm_source=WP.PLUGIN.PAGE&utm_medium=LINK.WEB), SMBs do not have to worry about maintaining inventory control manually since all sales channels affect a single centralized inventory. 
 
-With the first version of the plugin you will be able to sync orders and online payments in WooCommerce via Avify Integration.
-We support major credit cards brands like Visa, Mastercard and American Express.
+With our technology you can receive orders and payments coming from WordPress and merge them with any other one coming from social media interaction like Instagram, Facebook or WhatsApp. You can connect your logistics, payment and billing services so that any order that enters the business can process shipping price calculations, payment or transfer receipts, and receipts or invoices automatically.
+
+With our plugin you will be able to sync orders and online payments in WooCommerce via Avify Integration. Also, you can connect multiple card payment systems and [Avify](https://avify.com/?utm_source=WP.PLUGIN.PAGE&utm_medium=LINK.WEB) displays them at your checkout.
 
 Contact your dedicated support channel to get your API Key and the ID of your store.
 
@@ -32,17 +31,19 @@ Process payments and display prices in USD, CRC, MXN.
 * Sandbox testing.
 * Synchronize orders
 
-Do you want to know more about Avify? Please visit our [website](https://avify.com/) and find out what we can do.
+Do you want to know more about Avify? Please visit our [website](https://avify.com/?utm_source=WP.PLUGIN.PAGE&utm_medium=LINK.WEB) and find out what we can do.
 
 == Frequently Asked Questions ==
 
-= How much is the processing fee of Avify?=
+= Does Avify generate the order in WooCommerce? =
 
-Avify's processing fee is 5.5% + $0.30 per successful transaction. You must have a subscription plan of $29/month to have access to this functionality.
+No, Avify only updates WooCommerce inventory. All orders including WooCommerce orders are managed from [Avify.](https://avify.com/?utm_source=WP.PLUGIN.PAGE&utm_medium=LINK.WEB)
 
-= Where is my money deposited and what is the frecuency? =
+= Does Avify charge commissions for orders? =
 
-Every 15 days Avify sends you a report of your credit card transactions and the money is deposited in the account that you provided when you signed up for the subscription plan.
+No, we do not have any charge for orders. Avify only charges a monthly subscription for its use and the value of the subscription varies depending on the plan each business chooses.
+
+To know more about [Avify](https://avify.com/?utm_source=WP.PLUGIN.PAGE&utm_medium=LINK.WEB) subscription plans visit [avify.com/pricing](http://avify.com/pricing)
 
 = Where can I find my dedicated support channel? =
 
