@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) exit;
  * Plugin Name: Avify
  * Plugin URI:
  * Description: Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author: Avify
  * Author URI: https://avify.com/
  * Text Domain: avify-wordpress
@@ -72,6 +72,9 @@ function init_avify()
 
     /** Avify Shipping */
     include_once('avify-shipping.php');
+
+    /** Avify Rest */
+    include_once('avify-rest.php');
 
     /** Avify Custom Options */
     include_once('avify-custom-options.php');

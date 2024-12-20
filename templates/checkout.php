@@ -595,21 +595,28 @@ $cart = WC()->cart;
                         <div class="review-order-product-list">
 							<?php
 							if ( $cart ) {
-								foreach ( $cart->get_cart() ?? [] as $cart_item ) {
+								foreach ( $cart->get_cart() ?? [] as $cart_item_key => $cart_item ) {
 									$product  = $cart_item['data'];
-									$quantity = $cart_item['quantity'];
-
 									if ( ! empty( $product ) ) {
-										?>
+							?>
                                         <div class="review-order-product-item flex middle space-between">
-                                            <div class="review-order-product-item-part flex middle">
+                                            <?php
+                                                $quantity = $cart_item['quantity'];
+                                                $product_name      = apply_filters( 'woocommerce_cart_item_name', $product->get_name(), $cart_item, $cart_item_key );
+                                                $thumbnail         = apply_filters( 'woocommerce_cart_item_thumbnail', $product->get_image(), $cart_item, $cart_item_key );
+                                                $product_price     = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $product ), $cart_item, $cart_item_key );
+                                                $product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $product->is_visible() ? $product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
+                                            ?>
+                                            <div class="review-order-product-item-part flex middle"
+                                                 style="max-width: 80%"
+                                            >
                                                 <div class="review-order-product-item-image">
-													<?= $product->get_image(); ?>
+													<?= $thumbnail ?>
                                                 </div>
 
                                                 <div class="review-order-product-item-name">
                                                     <div class="avf_txt type-9">
-														<?= $product->get_name(); ?> x <?= $quantity; ?>
+														<?= $product_name ?> x <?= $quantity; ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -617,8 +624,7 @@ $cart = WC()->cart;
                                             <div class="review-order-product-item-price"
                                                  data-item-quantity="<?= $quantity; ?>">
                                                 <div class="avf_txt type-9">
-													<?= get_woocommerce_currency_symbol(); ?>
-													<?= $product->get_price(); ?>
+													<?= $product_price ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -670,7 +676,7 @@ $cart = WC()->cart;
                                 </div>
                             </div>
 
-                            <div class="review-order-total-taxes review-order-total-part-container">
+                            <div class="review-order-total-taxes review-order-total-part-container" style="<?= WC()->cart->display_prices_including_tax() ? "display: none" : "" ?>">
                                 <div class="review-order-total-left-part">
                                     <div class="avf_txt type-10">
 										<?php _e( 'Impuestos', 'avify-wordpress' ); ?>
