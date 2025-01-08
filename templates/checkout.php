@@ -622,9 +622,10 @@ $cart = WC()->cart;
                                             </div>
 
                                             <div class="review-order-product-item-price"
+                                                 data-item-price="<?= $product->get_price(); ?>"
                                                  data-item-quantity="<?= $quantity; ?>">
                                                 <div class="avf_txt type-9">
-													<?= $product_price ?>
+													<?= $product_price ?> <br/>
                                                 </div>
                                             </div>
                                         </div>
