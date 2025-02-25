@@ -3,7 +3,9 @@
 use App\Avify;
 
 class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
-
+	/**
+	 *
+	 */
 	public function __construct() {
         //TODO: remove this
 		$this->id = 'avify-payments';

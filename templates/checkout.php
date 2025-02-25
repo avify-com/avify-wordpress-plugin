@@ -604,7 +604,7 @@ $cart = WC()->cart;
                                                 $quantity = $cart_item['quantity'];
                                                 $product_name      = apply_filters( 'woocommerce_cart_item_name', $product->get_name(), $cart_item, $cart_item_key );
                                                 $thumbnail         = apply_filters( 'woocommerce_cart_item_thumbnail', $product->get_image(), $cart_item, $cart_item_key );
-                                                $product_price     = apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $product ), $cart_item, $cart_item_key );
+                                                $product_price     = apply_filters( 'woocommerce_cart_item_price', $cart->get_product_price( $product ), $cart_item, $cart_item_key );
                                                 $product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $product->is_visible() ? $product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
                                             ?>
                                             <div class="review-order-product-item-part flex middle"
@@ -677,7 +677,7 @@ $cart = WC()->cart;
                                 </div>
                             </div>
 
-                            <div class="review-order-total-taxes review-order-total-part-container" style="<?= WC()->cart->display_prices_including_tax() ? "display: none" : "" ?>">
+                            <div class="review-order-total-taxes review-order-total-part-container" style="<?= $cart && $cart->display_prices_including_tax() ? "display: none" : "" ?>">
                                 <div class="review-order-total-left-part">
                                     <div class="avf_txt type-10">
 										<?php _e( 'Impuestos', 'avify-wordpress' ); ?>
