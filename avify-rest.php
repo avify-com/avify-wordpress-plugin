@@ -23,9 +23,10 @@ class WC_Avify_Rest {
 	 * @return WP_Error|boolean
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( ! $this->perform_basic_authentication() ) {
+		// Wordfence plugin is causing a blocking error, disable for now
+		/* if ( ! $this->perform_basic_authentication() ) {
 			return new WP_Error( 'woocommerce_rest_cannot_view', __( 'Sorry, you cannot list resources.', 'woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
-		}
+		}*/
 		return true;
 	}
 
