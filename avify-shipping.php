@@ -6,26 +6,7 @@ use App\Utils\Curl;
  * Check if WooCommerce is active
  */
 if (in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
-    if (!function_exists('avify_log')) {
-        function avify_log($entry, $mode = 'a', $file = 'avify')
-        {
-            // Get WordPress uploads directory.
-            $upload_dir = wp_upload_dir();
-            $upload_dir = $upload_dir['basedir'];
-            // If the entry is array, json_encode.
-            if (is_array($entry)) {
-                $entry = json_encode($entry);
-            }
-            // Write the log file.
-            $file = $upload_dir . '/wc-logs/' . $file . date("Y-m-d") . '.log';
-            $file = fopen($file, $mode);
-            $bytes = fwrite($file, current_time('mysql') . " : " . $entry . "\n");
-            fclose($file);
-            return $bytes;
-        }
-    }
-
-    if (!function_exists('create_avify_quote')) {
+	if (!function_exists('create_avify_quote')) {
         function create_avify_quote($AVIFY_URL, $AVIFY_SHOP_ID)
         {
             avify_log('create_avify_quote...');
