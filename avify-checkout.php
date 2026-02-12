@@ -9,12 +9,8 @@ function load_avify_checkout_scripts() {
         // intl-tel-input library (country code dropdown for phone field)
         wp_enqueue_style('intl-tel-input', 'https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.min.css', array(), '25.3.1');
         wp_enqueue_script('intl-tel-input', 'https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js', array(), '25.3.1', true);
-
-        // Our custom overrides and initialization
         wp_enqueue_style('avify-phone-intl-overrides', plugin_dir_url( __FILE__ ) . '/assets/avify-phone-intl-overrides.css', array('intl-tel-input'), $v);
         wp_enqueue_script('avify-phone-intl', plugin_dir_url( __FILE__ ) . '/assets/avify-phone-intl.js', array('intl-tel-input'), $v, true);
-
-        // Pass the WooCommerce base country to our JS
         $base_country = function_exists('WC') ? WC()->countries->get_base_country() : 'CR';
         wp_localize_script('avify-phone-intl', 'avfPhoneIntl', array(
             'country' => strtolower($base_country),

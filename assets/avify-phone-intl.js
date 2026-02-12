@@ -1,12 +1,13 @@
 (function () {
-  var input = document.querySelector('#avf_billing_tel');
-  if (!input) return;
+  let avfBillingPhone = document.querySelector('#avf_billing_tel');
+  let wooBillingPhone = document.querySelector('#billing_phone');
+  if (!avfBillingPhone) return;
 
-  var initialCountry = (window.avfPhoneIntl && window.avfPhoneIntl.country)
+  let initialCountry = (window.avfPhoneIntl && window.avfPhoneIntl.country)
     ? window.avfPhoneIntl.country.toLowerCase()
     : 'cr';
 
-  var iti = window.intlTelInput(input, {
+  let iti = window.intlTelInput(avfBillingPhone, {
     initialCountry: initialCountry,
     nationalMode: true,
     autoPlaceholder: 'aggressive',
@@ -16,28 +17,22 @@
     useFullscreenPopup: false
   });
 
-  // Before the minified JS reads the value, we set the full international number.
-  // Using capturing phase (3rd arg = true) so our handler runs BEFORE the minified
-  // JS event listeners that are on the bubbling phase.
   function setFullNumber() {
-    var fullNumber = iti.getNumber();
-    if (fullNumber) {
-      input.value = fullNumber;
+    if (avfBillingPhone.value) {
+      wooBillingPhone.value = `+${iti.getSelectedCountryData().dialCode}${avfBillingPhone.value}`;
     }
   }
 
-  var secondStepBtn = document.querySelector('#avf_to_second_step_button');
-  var checkoutBtn = document.querySelector('#avf_checkout_button');
-
+  let secondStepBtn = document.querySelector('#avf_to_second_step_button');
+  let checkoutBtn = document.querySelector('#avf_checkout_button');
   if (secondStepBtn) {
     secondStepBtn.addEventListener('click', setFullNumber, true);
   }
   if (checkoutBtn) {
     checkoutBtn.addEventListener('click', setFullNumber, true);
   }
-
   // Also intercept form submit as a safety net
-  var form = input.closest('form');
+  let form = avfBillingPhone.closest('form');
   if (form) {
     form.addEventListener('submit', setFullNumber, true);
   }
