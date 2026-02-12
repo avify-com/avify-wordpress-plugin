@@ -1,0 +1,51 @@
+/* intl-tel-input overrides to match Avify checkout form styles */
+
+/* Make the container fill the parent width */
+.avf_form-input-inner .iti {
+  width: 100%;
+}
+
+/* Match the input styles when intl-tel-input adds left padding for the flag */
+.avf_form-input-inner .iti input#avf_billing_tel {
+  padding-left: 52px;
+}
+
+/* Style the flag button to match form height */
+.avf_form-input-inner .iti__country-container {
+  height: 100%;
+}
+
+.avf_form-input-inner .iti__selected-country-primary {
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+/* Dropdown styling */
+.iti__dropdown-content {
+  border: 1px solid #E2E2E2;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+}
+
+.iti__search-input {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  border: 1px solid #E2E2E2;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.iti__country {
+  padding: 8px 10px;
+}
+
+.iti__country:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Ensure the dial code in the dropdown is visible */
+.iti__dial-code {
+  color: #626262;
+}

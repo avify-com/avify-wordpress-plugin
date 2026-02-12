@@ -140,7 +140,7 @@ $cart = WC()->cart;
                                             </div>
 
                                             <div class="avf_form-input-inner">
-                                                <input type="text" id="avf_billing_tel">
+                                                <input type="tel" id="avf_billing_tel">
                                             </div>
                                         </div>
                                     </div>
