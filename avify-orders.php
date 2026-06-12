@@ -39,6 +39,32 @@ function avify_disable_new_email($enabled, $email) {
 add_filter('woocommerce_email_enabled_new_order', 'avify_disable_new_email', 10, 2);
 
 /**
+ * Blocks setting the "refunded" status via REST API on orders paid with Tilopay,
+ * since the Tilopay plugin triggers a real money refund on that status change.
+ *
+ * @param $order WC_Order
+ * @param $request WP_REST_Request
+ * @param $creating boolean
+ *
+ * @return WC_Order|WP_Error
+ */
+function avify_block_external_tilopay_refunds( $order, $request, $creating ) {
+	if ( ! $creating && $request->get_param( 'status' ) === 'refunded' ) {
+		$existing_order = wc_get_order( $order->get_id() );
+		if ( $existing_order && $existing_order->get_payment_method() === 'tilopay' ) {
+			avify_log( "stop external refund (tilopay) => {$order->get_id()}" );
+			return new WP_Error(
+				'refund_blocked',
+				'Orden pagada con Tilopay NO puede ser reembolsada desde sistemas externos.',
+				array( 'status' => 403 )
+			);
+		}
+	}
+	return $order;
+}
+add_filter( 'woocommerce_rest_pre_insert_shop_order_object', 'avify_block_external_tilopay_refunds', 10, 3 );
+
+/**
  * @param $can boolean
  * @param $order WC_Order
  *

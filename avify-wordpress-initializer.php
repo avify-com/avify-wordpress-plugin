@@ -6,14 +6,14 @@ if (!defined('ABSPATH')) exit;
  * Plugin Name: Avify
  * Plugin URI:
  * Description: Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
- * Version: 1.3.8
+ * Version: 1.3.9
  * Author: Avify
  * Author URI: https://avify.com/
  * Text Domain: avify-wordpress
  * Domain Path: /languages
  * Requires at least: 5.6
- * Tested up to: 6.8.2
- * Requires PHP: 7.0
+ * Tested up to: 7.0
+ * Requires PHP: 7.4
  */
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';

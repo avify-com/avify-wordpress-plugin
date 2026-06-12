@@ -3,9 +3,9 @@
 Contributors: juanescobar06, tubipapilla, jupagar77
 Tags: avify, checkout, orders, payment gateway, woocommerce
 Requires at least: 5.6
-Tested up to: 6.8.2
-Stable tag: 1.3.8
-Requires PHP: 7.0
+Tested up to: 7.0
+Stable tag: 1.3.9
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,12 @@ When you sign up for a monthly subscription, our customer success department wil
 -  To connect the orders enable in the avify dashboard Integrations > Woocommerce
 
 ## Changelog
+
+### 1.3.9
+
+* Tested up to: 7.0
+* Minimum PHP version: 7.4
+* Block external refunds via REST API for orders paid with Tilopay
 
 ### 1.3.8
 

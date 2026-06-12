@@ -2,9 +2,9 @@
 Contributors: juanescobar06, tubipapilla, jupagar77
 Tags: avify, checkout, orders, payment gateway, woocommerce
 Requires at least: 5.6
-Tested up to: 6.8.2
-Stable tag: 1.3.8
-Requires PHP: 7.0
+Tested up to: 7.0
+Stable tag: 1.3.9
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,14 +51,20 @@ When you sign up for a monthly subscription, our customer success department wil
 
 == Installation ==
 
-* Make sure that you have at least PHP Version 7.0 and [WooCommerce](https://wordpress.org/plugins/woocommerce/) installed.
+* Make sure that you have at least PHP Version 7.4 and [WooCommerce](https://wordpress.org/plugins/woocommerce/) installed.
 * Upload the plugin zip file in Plugins > Add New > Upload Plugin > Choose the zip file and click "Install Now".
 * Enable the plugin under Woocommerce > Settings > Payments.
 * Press the "Manage" button and add your provided Store ID and Client Secret.
 * To connect the orders enable in the avify dashboard Integrations > Woocommerce
 == Changelog ==
 
-### 1.3.8
+### 1.3.9
+
+* Tested up to: 7.0
+* Minimum PHP version: 7.4
+* Block external refunds via REST API for orders paid with Tilopay
+
+= 1.3.8 =
 
 * Add country selector for phone input
 
