@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) exit;
  * Plugin Name: Avify
  * Plugin URI:
  * Description: Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
- * Version: 1.3.9
+ * Version: 1.4.0
  * Author: Avify
  * Author URI: https://avify.com/
  * Text Domain: avify-wordpress
@@ -80,15 +80,6 @@ function init_avify()
         add_action('admin_notices', 'avify_payments_admin_missing_woocommerce');
         return;
     }
-    include_once('avify-payments-gateway.php');
-
-    function add_avify_payments_gateway($methods)
-    {
-        $methods[] = 'WC_Avify_Payments_Gateway';
-        return $methods;
-    }
-    add_filter('woocommerce_payment_gateways', 'add_avify_payments_gateway');
-
     /** Avify Orders */
     include_once('avify-orders.php');
 

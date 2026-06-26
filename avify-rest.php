@@ -16,21 +16,6 @@ class WC_Avify_Rest {
 	}
 
 	/**
-	 * Check whether a given request has permission to read webhook deliveries.
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
-	 * @return WP_Error|boolean
-	 */
-	public function get_items_permissions_check( $request ) {
-		// Wordfence plugin is causing a blocking error, disable for now
-		/* if ( ! $this->perform_basic_authentication() ) {
-			return new WP_Error( 'woocommerce_rest_cannot_view', __( 'Sorry, you cannot list resources.', 'woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
-		}*/
-		return true;
-	}
-
-	/**
 	 * @return void
 	 */
 	public function register_routes() {
@@ -41,9 +26,7 @@ class WC_Avify_Rest {
 				array(
 					'methods'             => 'GET',
 					'callback'            => array( $this, 'avify_v1_products_categories' ),
-					'permission_callback' => array( $this, 'get_items_permissions_check' ),
 				),
-				'schema' => array( $this, 'get_public_item_schema' ),
 			)
 		);
 
@@ -54,9 +37,7 @@ class WC_Avify_Rest {
 				array(
 					'methods'             => 'POST',
 					'callback'            => array( $this, 'avify_v1_attachment' ),
-					// 'permission_callback' => array( $this, 'get_items_permissions_check' ),
 				),
-				'schema' => array( $this, 'get_public_item_schema' ),
 			)
 		);
 	}

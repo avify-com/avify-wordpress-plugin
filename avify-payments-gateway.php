@@ -3,6 +3,14 @@
 use App\Avify;
 
 class WC_Avify_Payments_Gateway extends WC_Payment_Gateway_CC {
+	public string $payment_method_title = '';
+	public string $entity_description   = '';
+	public string $api_mode             = 'production';
+	public string $api_version          = 'v1';
+	public string $charge_description   = '';
+	public string $store_id             = '';
+	public string $client_secret        = '';
+
 	/**
 	 *
 	 */
