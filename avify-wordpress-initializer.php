@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) exit;
  * Plugin Name: Avify
  * Plugin URI:
  * Description: Connect your WooCommerce account to Avify and send all your orders to one centralized inventory.
- * Version: 1.4.1
+ * Version: 1.4.2
  * Author: Avify
  * Author URI: https://avify.com/
  * Text Domain: avify-wordpress
@@ -95,6 +95,9 @@ function init_avify()
     /** Avify Checkout */
     include_once('avify-checkout.php');
     require_once dirname(__FILE__) . '/includes/checkout.php';
+
+    /** Avify Chat Widget */
+    // include_once('avify-chat.php');
 }
 add_action('plugins_loaded', 'init_avify', 0);
 
@@ -273,20 +276,44 @@ function avify_count_orphaned_sku_meta() {
     );
 }
 
+/**
+ * Counts stale rows in WooCommerce's `wc_product_meta_lookup` table, i.e.
+ * rows whose product no longer exists or is sitting in the Trash. WooCommerce
+ * only clears this table on permanent deletion (not on trash), so a trashed
+ * product keeps "reserving" its SKU here and makes REST product creation
+ * fail with "already present in the lookup table", even though the SKU
+ * won't show up as a duplicate anywhere in wp-admin.
+ *
+ * @return int
+ */
+function avify_count_orphaned_sku_lookup() {
+    global $wpdb;
+
+    if (!isset($wpdb->wc_product_meta_lookup)) {
+        return 0;
+    }
+
+    return (int) $wpdb->get_var(
+        "SELECT COUNT(*) FROM {$wpdb->wc_product_meta_lookup} lookup
+        LEFT JOIN {$wpdb->posts} p ON p.ID = lookup.product_id AND p.post_type IN ('product', 'product_variation') AND p.post_status != 'trash'
+        WHERE p.ID IS NULL"
+    );
+}
+
 /** Renders the "Herramientas" section on the Avify settings page. */
 function avify_render_tools_section() {
-    $orphaned_count = avify_count_orphaned_sku_meta();
+    $total = avify_count_orphaned_sku_meta() + avify_count_orphaned_sku_lookup();
 
     echo '<hr />';
     echo '<h2>' . esc_html__('Herramientas', 'avify-wordpress') . '</h2>';
-    echo '<p>' . esc_html__('Elimina metadatos de SKU huérfanos (sin producto asociado) que pueden impedir crear un producto nuevo con ese mismo SKU.', 'avify-wordpress') . '</p>';
+    echo '<p>' . esc_html__('Elimina registros de SKU huérfanos o retenidos por productos eliminados/en la papelera que pueden impedir crear un producto nuevo con ese mismo SKU.', 'avify-wordpress') . '</p>';
     echo '<p><strong>' . sprintf(
-        /* translators: %d: number of orphaned SKU meta rows found. */
+        /* translators: %d: number of orphaned SKU records found. */
         esc_html__('SKUs huérfanos encontrados: %d', 'avify-wordpress'),
-        $orphaned_count
+        $total
     ) . '</strong></p>';
 
-    if ($orphaned_count === 0) {
+    if ($total === 0) {
         return;
     }
 
@@ -297,7 +324,7 @@ function avify_render_tools_section() {
     echo '</form>';
 }
 
-/** Handles the orphaned SKU meta cleanup request. */
+/** Handles the orphaned SKU cleanup request. */
 function avify_clean_orphaned_skus_handler() {
     if (!current_user_can('manage_options')) {
         wp_die(esc_html__('No tienes permisos suficientes para realizar esta acción.', 'avify-wordpress'));
@@ -306,16 +333,24 @@ function avify_clean_orphaned_skus_handler() {
     check_admin_referer('avify_clean_orphaned_skus');
 
     global $wpdb;
-    $deleted = $wpdb->query(
+    $deleted = (int) $wpdb->query(
         "DELETE pm FROM {$wpdb->postmeta} pm
         LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id AND p.post_type IN ('product', 'product_variation')
         WHERE pm.meta_key = '_sku' AND p.ID IS NULL"
     );
 
+    if (isset($wpdb->wc_product_meta_lookup)) {
+        $deleted += (int) $wpdb->query(
+            "DELETE lookup FROM {$wpdb->wc_product_meta_lookup} lookup
+            LEFT JOIN {$wpdb->posts} p ON p.ID = lookup.product_id AND p.post_type IN ('product', 'product_variation') AND p.post_status != 'trash'
+            WHERE p.ID IS NULL"
+        );
+    }
+
     $redirect = add_query_arg(
         [
             'page' => 'avify-settings',
-            'avify_orphaned_skus_deleted' => max(0, (int) $deleted),
+            'avify_orphaned_skus_deleted' => max(0, $deleted),
         ],
         admin_url('admin.php')
     );
